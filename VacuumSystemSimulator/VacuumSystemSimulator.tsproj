@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4018.26">
+	<Project ProjectGUID="{B44D9628-811D-4EDC-8997-AFB963B082E5}" Target64Bit="true">
+		<System>
+			<Tasks>
+				<Task Id="2" Priority="20" CycleTime="100000" AmsPort="350">
+					<Name>PlcTask</Name>
+				</Task>
+				<Task Id="3" Priority="30" CycleTime="500000" AmsPort="351">
+					<Name>VISU_TASK</Name>
+				</Task>
+			</Tasks>
+		</System>
+		<Plc>
+			<Project GUID="{E7B9CC43-8510-4F02-8B6F-7A4036C1F12B}" Name="VacuumSystemSimulator" PrjFilePath="VacuumSystemSimulator\VacuumSystemSimulator.plcProj" TmcFilePath="VacuumSystemSimulator\VacuumSystemSimulator.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e">
+				<Instance Id="#x01010010" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+					<Name>VacuumSystemSimulator Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="1">
+						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>GVL_IO.i_xVAC_SPEC_ep2624s01c01</Name>
+							<Comment>
+								<![CDATA[ VAC-SPEC]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.i_xVAC_SPEC_ep2624s01c02</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.i_xVAC_SPEC_ep2624s01c03</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.i_xVAC_SPEC_ep2624s01c04</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.i_xVAC_SPEC_ep2338s02c02</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.i_xVAC_SPEC_ep2338s02c05</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.i_xVAC_SPEC_ep2338s02c08</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.i_xVAC_SPEC_ep2339s03c01</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.i_xVAC_SPEC_ep2339s03c04</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.i_xVAC_SPEC_ep2339s03c05</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.i_xVAC_SPEC_ep2339s03c08</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.i_xVAC_SPEC_ep2339s03c13</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.i_xVAC_SPEC_ep2339s03c16</Name>
+							<Type>BOOL</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="2">
+						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>GVL_IO.q_xVAC_SPEC_ep2338s02c01</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_xVAC_SPEC_ep2338s02c03</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_xVAC_SPEC_ep2338s02c04</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_xVAC_SPEC_ep2338s02c06</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_xVAC_SPEC_ep2338s02c07</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_xVAC_SPEC_ep2339s03c02</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_xVAC_SPEC_ep2339s03c03</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_xVAC_SPEC_ep2339s03c06</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_xVAC_SPEC_ep2339s03c07</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_xVAC_SPEC_ep2339s03c09</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_xVAC_SPEC_ep2339s03c10</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_xVAC_SPEC_ep2339s03c11</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_xVAC_SPEC_ep2339s03c12</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_xVAC_SPEC_ep2339s03c14</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_xVAC_SPEC_ep2339s03c15</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_iVAC_SPEC_ep3174s04c01</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_iVAC_SPEC_ep3174s04c02</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_iVAC_SPEC_ep3174s04c03</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>GVL_IO.q_iVAC_SPEC_ep3174s04c04</Name>
+							<Type>INT</Type>
+						</Var>
+					</Vars>
+					<TaskPouOids>
+						<TaskPouOid Prio="30" OTCID="#x01010012"/>
+						<TaskPouOid Prio="20" OTCID="#x01010011"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+		</Plc>
+	</Project>
+</TcSmProject>
