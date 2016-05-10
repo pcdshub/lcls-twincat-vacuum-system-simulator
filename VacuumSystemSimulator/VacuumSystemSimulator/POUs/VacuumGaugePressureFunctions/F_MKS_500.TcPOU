@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+  <POU Name="F_MKS_500" Id="{ae6484ed-7a3a-42a3-b4a9-776f66ce63ef}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_MKS_500 : INT
+VAR_INPUT
+	i_rPress	:	REAL;
+	i_xHVOn	:	BOOL;
+	i_xICOn	:	BOOL;
+END_VAR
+VAR
+	rVoltage	:	REAL;
+END_VAR
+VAR CONSTANT
+	vBase	:	REAL := 1; //corresponding vbase 1V actually?
+	pBase	:	REAL := 1.0E-9; //i think the pbase might be 1E-9 for the default curve...
+	vSlope	:	REAL := 1.0; //looks correct for default curve
+	vNoIC	:	REAL := 0.6;
+	vNoHV	:	REAL := 0.1;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+MKS 500 voltage calculation
+
+Does the inverse of the FB 500 from the vacuum library.
+
+A. Wallace, 2016-2-22
+*)
+IF i_xHVOn and i_xICOn THEN
+	rVoltage := (vBase + vSlope * LOG(i_rPress/pBase));
+ELSIF i_xHVOn AND NOT i_xICOn THEN
+	rVoltage := vNoIC;
+ELSE
+	rVoltage := vNoHV;
+END_IF
+
+F_MKS500 := REAL_TO_INT( rVoltage * 32767/10 );]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

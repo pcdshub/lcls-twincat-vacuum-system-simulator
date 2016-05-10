@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+  <POU Name="FB_RoughPump" Id="{1c0a7f67-206d-4f00-a16d-b41dffef9f3c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_RoughPump
+VAR_INPUT
+	i_xRun	:	BOOL := FALSE;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR_IN_OUT
+	stVolInlet	:	ST_Volume;
+	stPump	:	ST_MechPump;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* 
+Roughing pump
+
+A roughing pump removes matter from the inlet at a specified
+rate.
+
+A. Wallace, 2016-2-28
+*)
+
+IF i_xRun THEN
+	// 
+	stVolInlet.rPressure := MAX( stVolInlet.rPressure*(1-stPump.rMRE/stVolInlet.rVolume), stPump.rBasePress);
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+  <POU Name="FB_Aperture" Id="{35f5ab3e-3a91-4ce3-b2be-118fed7b4106}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Aperture
+VAR_INPUT
+	i_rC	:	REAL := 0.5; //Conductance (less than 1)
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR_IN_OUT
+	stAVol	:	ST_Volume;
+	stBVol	:	ST_Volume;
+END_VAR
+VAR
+	Pa, Va, Pb, Vb	:	REAL;
+	DeltaPa, DeltaPb	:	REAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* Aperture Simulation
+A. Wallace 2016-5-5
+
+An aperture is like a valve that is permanently open but allows a restricted
+amount of mass to flow through it. It has no polarity, that is to say,
+it flows the same in either direction.
+*)
+
+// Mass flow is dependent upon pressure differential, mass flow limited by aperture size.
+
+Pa := stAVol.rPressure;
+Va := stAVol.rVolume;
+
+Pb := stBVol.rPressure;
+Vb := stBVol.rVolume;
+
+DeltaPa := (Vb*(Pb-Pa))/(Va+Vb);
+DeltaPb := (Va*(Pa-Pb))/(Va+Vb);
+
+stAVol.rPressure := Pa + i_rC*DeltaPa;
+stBVol.rPressure := Pb + i_rC*DeltaPb;
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

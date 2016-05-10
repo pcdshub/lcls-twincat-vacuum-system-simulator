@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+  <POU Name="FB_MKS_422" Id="{1e7b5c4b-867d-428c-a822-12e2cdc9d71f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_MKS_422
+VAR_INPUT
+	stVolume : ST_Volume;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR_IN_OUT
+	stGauge	:	ST_MKS_422;
+END_VAR
+VAR
+
+END_VAR
+VAR CONSTANT
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* 
+MKS 422 Vacuum gauge
+
+A vacuum gauge takes as input, the pressure of the volume it is attached to,
+and produces on its analog output, a corresponding voltage.
+
+
+*)
+
+(* Operation 
+When the HV on signal is active, the gauge will take a little bit of time to
+start an ion current.
+*)
+stGauge.tonIC.IN	:=	stGauge.i_xHvOn;	
+stGauge.tonIC();
+
+
+(* Pressure *)
+IF stgauge.tonIC.Q THEN
+	stGauge.q_iRawPress := F_MKS_937_LOG(stGauge.rPress);
+ELSIF stGauge.i_xHvOn THEN
+	stGauge.q_iRawPress := F_MKS_937_LOG(1E-11); // gauge on, waiting for spark
+ELSE
+	stGauge.q_iRawPress := F_MKS_937_LOG(1E-4); // gauge not on
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+  <DUT Name="ST_VacuumGauge" Id="{812c03ad-6df6-423d-97af-0b61783374d3}">
+    <Declaration><![CDATA[TYPE ST_VacuumGauge :
+STRUCT
+	(* Simulation parameters *)
+	rPress	:	REAL;
+	
+	(* IO *)
+	q_iRawPress	:	INT;
+
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

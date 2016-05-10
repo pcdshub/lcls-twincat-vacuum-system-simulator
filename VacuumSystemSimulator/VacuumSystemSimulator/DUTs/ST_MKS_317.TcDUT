@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5" FileSignature="71c77c05a668c1e78388298310e23ba45cd204dc1b1031eb04e2d96edcd90f81758e7bf96eeacaa8c251e131df1964c7fbe3b51fb86a0656669aea46dbf493e5b752c69f513b1e5b3a27bfe798e6ee2c8084bde91ac88c50f3318f5b664d6ecd53cab0485a2de340b97c85e992b775ff53d7ec195a766ba46492f8a253221931597781825bf6ed2fcf4fd9d015f09d49ef4c09249f80cff72a0170bac13f3fc552e4ba505532951de1d573e3addc382059878271e82ceb11bfe49340637f040d4c7eadac4bb90afbc875b2c91ba2005d35319bd7411bddd09cad7671e8ac7d3b64bbdccdf119cb958eef16efb0d7bf41c3772de65bccd2709a569b216bf5cfdb">
+  <DUT Name="ST_MKS_317" Id="{08cf4a61-0dde-4d2e-a317-b034866ff77a}">
+    <Declaration><![CDATA[TYPE ST_MKS_317 EXTENDS ST_VacuumGauge :
+STRUCT
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

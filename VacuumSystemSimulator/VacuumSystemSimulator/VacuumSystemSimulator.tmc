@@ -1,0 +1,3030 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcModuleClass xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2009/05/TcModuleClass" Hash="{2F07B6E6-4D4C-0CF8-A9B3-67D8D7905B34}" GeneratedBy="TwinCAT XAE Plc">
+  <DataTypes>
+    <DataType>
+      <Name>ST_Volume</Name>
+      <BitSize>96</BitSize>
+      <SubItem>
+        <Name>rVolume</Name>
+        <Type>REAL</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>rPressure</Name>
+        <Type>REAL</Type>
+        <Comment><![CDATA[in Torr]]></Comment>
+        <BitSize>32</BitSize>
+        <BitOffs>32</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>rVLeak</Name>
+        <Type>REAL</Type>
+        <Comment><![CDATA[Torr*L/cycle]]></Comment>
+        <BitSize>32</BitSize>
+        <BitOffs>64</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name Namespace="Tc2_Standard">TON</Name>
+      <BitSize>256</BitSize>
+      <SubItem>
+        <Name>IN</Name>
+        <Type>BOOL</Type>
+        <Comment><![CDATA[ starts timer with rising edge, resets timer with falling edge ]]></Comment>
+        <BitSize>8</BitSize>
+        <BitOffs>64</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Input</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>PT</Name>
+        <Type>TIME</Type>
+        <Comment><![CDATA[ time to pass, before Q is set ]]></Comment>
+        <BitSize>32</BitSize>
+        <BitOffs>96</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Input</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>Q</Name>
+        <Type>BOOL</Type>
+        <Comment><![CDATA[ gets TRUE, delay time (PT) after a rising edge at IN ]]></Comment>
+        <BitSize>8</BitSize>
+        <BitOffs>128</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Output</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>ET</Name>
+        <Type>TIME</Type>
+        <Comment><![CDATA[ elapsed time ]]></Comment>
+        <BitSize>32</BitSize>
+        <BitOffs>160</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Output</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>M</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>192</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>StartTime</Name>
+        <Type>TIME</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>224</BitOffs>
+      </SubItem>
+      <Properties>
+        <Property>
+          <Name>PouType</Name>
+          <Value>FunctionBlock</Value>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name Namespace="Tc2_Standard">SR</Name>
+      <BitSize>96</BitSize>
+      <SubItem>
+        <Name>SET1</Name>
+        <Type>BOOL</Type>
+        <Comment><![CDATA[ Input to set Q1 (set dominant)]]></Comment>
+        <BitSize>8</BitSize>
+        <BitOffs>64</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Input</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>RESET</Name>
+        <Type>BOOL</Type>
+        <Comment><![CDATA[ Input to reset Q1]]></Comment>
+        <BitSize>8</BitSize>
+        <BitOffs>72</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Input</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>Q1</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>80</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Output</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <Properties>
+        <Property>
+          <Name>PouType</Name>
+          <Value>FunctionBlock</Value>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name Namespace="Tc2_Standard">R_TRIG</Name>
+      <Comment><![CDATA[
+	Rising Edge detection.
+]]></Comment>
+      <BitSize>96</BitSize>
+      <SubItem>
+        <Name>CLK</Name>
+        <Type>BOOL</Type>
+        <Comment><![CDATA[ Signal to detect ]]></Comment>
+        <BitSize>8</BitSize>
+        <BitOffs>64</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Input</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>Q</Name>
+        <Type>BOOL</Type>
+        <Comment><![CDATA[ rising edge at signal detected ]]></Comment>
+        <BitSize>8</BitSize>
+        <BitOffs>72</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Output</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <Properties>
+        <Property>
+          <Name>PouType</Name>
+          <Value>FunctionBlock</Value>
+        </Property>
+        <Property>
+          <Name>hide_all_locals</Name>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name>ST_MechPump</Name>
+      <BitSize>1344</BitSize>
+      <SubItem>
+        <Name>rMRE</Name>
+        <Type>REAL</Type>
+        <Comment><![CDATA[ Mass Removal Efficiency: should be a number less than 1.]]></Comment>
+        <BitSize>32</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>rBasePress</Name>
+        <Type>REAL</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>32</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>rLoad</Name>
+        <Type>REAL</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>64</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>iMaxSpd</Name>
+        <Type>INT</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>96</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>rMaxLoad</Name>
+        <Type>REAL</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>128</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>tonSpd</Name>
+        <Type Namespace="Tc2_Standard">TON</Type>
+        <BitSize>256</BitSize>
+        <BitOffs>192</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>tonTemp</Name>
+        <Type Namespace="Tc2_Standard">TON</Type>
+        <BitSize>256</BitSize>
+        <BitOffs>448</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>tonOvrLd</Name>
+        <Type Namespace="Tc2_Standard">TON</Type>
+        <BitSize>256</BitSize>
+        <BitOffs>704</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>xCooling</Name>
+        <Type>BOOL</Type>
+        <Comment><![CDATA[ hook the cooling active signal here]]></Comment>
+        <BitSize>8</BitSize>
+        <BitOffs>960</BitOffs>
+        <Default>
+          <Value>0</Value>
+        </Default>
+      </SubItem>
+      <SubItem>
+        <Name>srError</Name>
+        <Type Namespace="Tc2_Standard">SR</Type>
+        <BitSize>96</BitSize>
+        <BitOffs>1024</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>rtResetErr</Name>
+        <Type Namespace="Tc2_Standard">R_TRIG</Type>
+        <BitSize>96</BitSize>
+        <BitOffs>1152</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>i_xIlk</Name>
+        <Type>BOOL</Type>
+        <Comment><![CDATA[Discrete controls]]></Comment>
+        <BitSize>8</BitSize>
+        <BitOffs>1248</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>i_xRun</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>1256</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>q_xAtSpd</Name>
+        <Type>BOOL</Type>
+        <Comment><![CDATA[Discrete readbacks]]></Comment>
+        <BitSize>8</BitSize>
+        <BitOffs>1264</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>q_xErr</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>1272</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>q_iPower</Name>
+        <Type>INT</Type>
+        <Comment><![CDATA[Other Readbacks]]></Comment>
+        <BitSize>16</BitSize>
+        <BitOffs>1280</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>q_iSpeed</Name>
+        <Type>INT</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>1296</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name>FB_PfeifferTurboPump</Name>
+      <BitSize>448</BitSize>
+      <SubItem>
+        <Name>stVlInlet</Name>
+        <Type ReferenceTo="true">ST_Volume</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>64</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>InOut</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>stVlOutlet</Name>
+        <Type ReferenceTo="true">ST_Volume</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>128</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>InOut</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>stPump</Name>
+        <Type ReferenceTo="true">ST_MechPump</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>192</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>InOut</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>rLoadFactor</Name>
+        <Type>REAL</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>256</BitOffs>
+        <Default>
+          <Value>0.8</Value>
+        </Default>
+      </SubItem>
+      <SubItem>
+        <Name>xOverloaded</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>288</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>rMaxMRR</Name>
+        <Type>REAL</Type>
+        <Comment><![CDATA[arbitrary for now]]></Comment>
+        <BitSize>32</BitSize>
+        <BitOffs>320</BitOffs>
+        <Default>
+          <Value>0.8</Value>
+        </Default>
+      </SubItem>
+      <SubItem>
+        <Name>xPump</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>352</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>rInletPressDelta</Name>
+        <Type>REAL</Type>
+        <Comment><![CDATA[Inlet pressure change in one cycle]]></Comment>
+        <BitSize>32</BitSize>
+        <BitOffs>384</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>rMassTrans</Name>
+        <Type>REAL</Type>
+        <Comment><![CDATA[Mass transfered through the pump in one cycle]]></Comment>
+        <BitSize>32</BitSize>
+        <BitOffs>416</BitOffs>
+      </SubItem>
+      <Properties>
+        <Property>
+          <Name>PouType</Name>
+          <Value>FunctionBlock</Value>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name>FB_RoughPump</Name>
+      <BitSize>256</BitSize>
+      <SubItem>
+        <Name>i_xRun</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>64</BitOffs>
+        <Default>
+          <Value>0</Value>
+        </Default>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Input</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>stVolInlet</Name>
+        <Type ReferenceTo="true">ST_Volume</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>128</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>InOut</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>stPump</Name>
+        <Type ReferenceTo="true">ST_MechPump</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>192</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>InOut</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <Properties>
+        <Property>
+          <Name>PouType</Name>
+          <Value>FunctionBlock</Value>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name>ST_VacuumValve</Name>
+      <BitSize>24</BitSize>
+      <SubItem>
+        <Name>q_xOpnLS</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>q_xClsLS</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>8</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>i_xSol</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>16</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name>FB_VacuumValve</Name>
+      <BitSize>832</BitSize>
+      <SubItem>
+        <Name>ValveTime</Name>
+        <Type>TIME</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>64</BitOffs>
+        <Default>
+          <Value>500</Value>
+        </Default>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Input</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>stAVol</Name>
+        <Type ReferenceTo="true">ST_Volume</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>128</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>InOut</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>stBVol</Name>
+        <Type ReferenceTo="true">ST_Volume</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>192</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>InOut</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>stValve</Name>
+        <Type ReferenceTo="true">ST_VacuumValve</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>256</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>InOut</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>ClsTON</Name>
+        <Type Namespace="Tc2_Standard">TON</Type>
+        <BitSize>256</BitSize>
+        <BitOffs>320</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>OpnTON</Name>
+        <Type Namespace="Tc2_Standard">TON</Type>
+        <BitSize>256</BitSize>
+        <BitOffs>576</BitOffs>
+      </SubItem>
+      <Properties>
+        <Property>
+          <Name>PouType</Name>
+          <Value>FunctionBlock</Value>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name Namespace="Tc2_System">DRAND</Name>
+      <Comment><![CDATA[ Random number generator. ]]></Comment>
+      <BitSize>4480</BitSize>
+      <SubItem>
+        <Name>Seed</Name>
+        <Type>INT</Type>
+        <Comment><![CDATA[ Start value ]]></Comment>
+        <BitSize>16</BitSize>
+        <BitOffs>64</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Input</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>Num</Name>
+        <Type>LREAL</Type>
+        <Comment><![CDATA[ Random value ]]></Comment>
+        <BitSize>64</BitSize>
+        <BitOffs>128</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Output</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <Properties>
+        <Property>
+          <Name>PouType</Name>
+          <Value>FunctionBlock</Value>
+        </Property>
+        <Property>
+          <Name>hide_all_locals</Name>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name>FB_VirtualLeak</Name>
+      <BitSize>4672</BitSize>
+      <SubItem>
+        <Name>stVol</Name>
+        <Type ReferenceTo="true">ST_Volume</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>64</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>InOut</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>fbRand</Name>
+        <Type Namespace="Tc2_System">DRAND</Type>
+        <BitSize>4480</BitSize>
+        <BitOffs>128</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>lrRandomFraction</Name>
+        <Type>LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>4608</BitOffs>
+      </SubItem>
+      <Properties>
+        <Property>
+          <Name>PouType</Name>
+          <Value>FunctionBlock</Value>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name>ST_VacuumGauge</Name>
+      <BitSize>64</BitSize>
+      <SubItem>
+        <Name>rPress</Name>
+        <Type>REAL</Type>
+        <Comment><![CDATA[ Simulation parameters ]]></Comment>
+        <BitSize>32</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>q_iRawPress</Name>
+        <Type>INT</Type>
+        <Comment><![CDATA[ IO ]]></Comment>
+        <BitSize>16</BitSize>
+        <BitOffs>32</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>i_xHvOn</Name>
+        <Type>BOOL</Type>
+        <Comment><![CDATA[Ion gauges only]]></Comment>
+        <BitSize>8</BitSize>
+        <BitOffs>48</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name Namespace="Tc2_ControllerToolbox">ST_CTRL_LIN_INTERPOLATION_PARAMS</Name>
+      <BitSize>192</BitSize>
+      <SubItem>
+        <Name>tCtrlCycleTime</Name>
+        <Type>TIME</Type>
+        <Comment><![CDATA[ controller cycle time [TIME]			]]></Comment>
+        <BitSize>32</BitSize>
+        <BitOffs>0</BitOffs>
+        <Default>
+          <Value>0</Value>
+        </Default>
+      </SubItem>
+      <SubItem>
+        <Name>tTaskCycleTime</Name>
+        <Type>TIME</Type>
+        <Comment><![CDATA[ task cycle time [TIME]				]]></Comment>
+        <BitSize>32</BitSize>
+        <BitOffs>32</BitOffs>
+        <Default>
+          <Value>0</Value>
+        </Default>
+      </SubItem>
+      <SubItem>
+        <Name>pDataTable_ADR</Name>
+        <Type PointerTo="1">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>64</BitOffs>
+        <Default>
+          <Value>0</Value>
+        </Default>
+      </SubItem>
+      <SubItem>
+        <Name>nDataTable_SIZEOF</Name>
+        <Type>UINT</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>128</BitOffs>
+        <Default>
+          <Value>0</Value>
+        </Default>
+      </SubItem>
+      <SubItem>
+        <Name>nDataTable_NumberOfRows</Name>
+        <Type>UINT</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>144</BitOffs>
+        <Default>
+          <Value>0</Value>
+        </Default>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name Namespace="Tc2_ControllerToolbox">E_CTRL_MODE</Name>
+      <BitSize>16</BitSize>
+      <BaseType>INT</BaseType>
+      <EnumInfo>
+        <Text>eCTRL_MODE_IDLE</Text>
+        <Enum>0</Enum>
+        <Comment><![CDATA[ mode idle					]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_MODE_PASSIVE</Text>
+        <Enum>1</Enum>
+        <Comment><![CDATA[ mode passive				]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_MODE_ACTIVE</Text>
+        <Enum>2</Enum>
+        <Comment><![CDATA[ mode active					]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_MODE_RESET</Text>
+        <Enum>3</Enum>
+        <Comment><![CDATA[ mode reset					]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_MODE_MANUAL</Text>
+        <Enum>4</Enum>
+        <Comment><![CDATA[ mode manual				]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_MODE_TUNE</Text>
+        <Enum>5</Enum>
+        <Comment><![CDATA[ mode tuning				]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_MODE_SELFTEST</Text>
+        <Enum>6</Enum>
+        <Comment><![CDATA[ mode selftest				]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_MODE_SYNC_MOVEMENT</Text>
+        <Enum>7</Enum>
+        <Comment><![CDATA[ mode synchronize			]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_MODE_FREEZE</Text>
+        <Enum>8</Enum>
+        <Comment><![CDATA[ mode freeze				]]></Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name Namespace="Tc2_ControllerToolbox">E_CTRL_STATE</Name>
+      <BitSize>16</BitSize>
+      <BaseType>INT</BaseType>
+      <EnumInfo>
+        <Text>eCTRL_STATE_IDLE</Text>
+        <Enum>0</Enum>
+        <Comment><![CDATA[ state idle		]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_STATE_PASSIVE</Text>
+        <Enum>1</Enum>
+        <Comment><![CDATA[ state passive	]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_STATE_ACTIVE</Text>
+        <Enum>2</Enum>
+        <Comment><![CDATA[ state active		]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_STATE_RESET</Text>
+        <Enum>3</Enum>
+        <Comment><![CDATA[ state reset		]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_STATE_MANUAL</Text>
+        <Enum>4</Enum>
+        <Comment><![CDATA[ state manual	]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_STATE_TUNING</Text>
+        <Enum>5</Enum>
+        <Comment><![CDATA[ state tuning		]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_STATE_TUNED</Text>
+        <Enum>6</Enum>
+        <Comment><![CDATA[ state tuning ready - tuned		]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_STATE_SELFTEST</Text>
+        <Enum>7</Enum>
+        <Comment><![CDATA[ state selftest		]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_STATE_ERROR</Text>
+        <Enum>8</Enum>
+        <Comment><![CDATA[ state error		]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_STATE_SYNC_MOVEMENT</Text>
+        <Enum>9</Enum>
+        <Comment><![CDATA[ state synchronizing movement		]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_STATE_FREEZE</Text>
+        <Enum>10</Enum>
+        <Comment><![CDATA[ state freeze 	]]></Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name Namespace="Tc2_ControllerToolbox">E_CTRL_ERRORCODES</Name>
+      <BitSize>16</BitSize>
+      <BaseType>INT</BaseType>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_NOERROR</Text>
+        <Enum>0</Enum>
+        <Comment><![CDATA[ no error ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDTASKCYCLETIME</Text>
+        <Enum>1</Enum>
+        <Comment><![CDATA[ invalid task cycle time ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDCTRLCYCLETIME</Text>
+        <Enum>2</Enum>
+        <Comment><![CDATA[ invalid ctrl cycle time ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM</Text>
+        <Enum>3</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_Tv</Text>
+        <Enum>4</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_Td</Text>
+        <Enum>5</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_Tn</Text>
+        <Enum>6</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_Ti</Text>
+        <Enum>7</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fHystereisisRange</Text>
+        <Enum>8</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fPosOutOn_Off</Text>
+        <Enum>9</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fNegOutOn_Off</Text>
+        <Enum>10</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_TableDescription</Text>
+        <Enum>11</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_TableData</Text>
+        <Enum>12</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_DataTableADR</Text>
+        <Enum>13</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_T0</Text>
+        <Enum>14</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_T1</Text>
+        <Enum>15</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_T2</Text>
+        <Enum>16</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_T3</Text>
+        <Enum>17</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_Theta</Text>
+        <Enum>18</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nOrder</Text>
+        <Enum>19</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_Tt</Text>
+        <Enum>20</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_Tu</Text>
+        <Enum>21</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_Tg</Text>
+        <Enum>22</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_infinite_slope</Text>
+        <Enum>23</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fMaxIsLessThanfMin</Text>
+        <Enum>24</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fOutMaxLimitIsLessThanfOutMinLimit</Text>
+        <Enum>25</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fOuterWindow</Text>
+        <Enum>26</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fInnerWindow</Text>
+        <Enum>27</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fOuterWindowIsLessThanfInnerWindow</Text>
+        <Enum>28</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fDeadBandInput</Text>
+        <Enum>29</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fDeadBandOutput</Text>
+        <Enum>30</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_PWM_Cycletime</Text>
+        <Enum>31</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_no_Parameterset</Text>
+        <Enum>32</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fOutOn</Text>
+        <Enum>33</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fOutOff</Text>
+        <Enum>34</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fGain</Text>
+        <Enum>35</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fOffset</Text>
+        <Enum>36</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_MODE_NOT_SUPPORTED</Text>
+        <Enum>37</Enum>
+        <Comment><![CDATA[ invalid mode: mode not supported ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_Tv_heating</Text>
+        <Enum>38</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_Td_heating</Text>
+        <Enum>39</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_Tn_heating</Text>
+        <Enum>40</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_Tv_cooling</Text>
+        <Enum>41</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_Td_cooling</Text>
+        <Enum>42</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_Tn_cooling</Text>
+        <Enum>43</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_RANGE_NOT_SUPPORTED</Text>
+        <Enum>44</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nParameterChangeCycleTicks</Text>
+        <Enum>45</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_ParameterEstimationFailed</Text>
+        <Enum>46</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_NoiseLevelToHigh</Text>
+        <Enum>47</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INTERNAL_ERROR_0</Text>
+        <Enum>48</Enum>
+        <Comment><![CDATA[ internal error ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INTERNAL_ERROR_1</Text>
+        <Enum>49</Enum>
+        <Comment><![CDATA[ internal error ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INTERNAL_ERROR_2</Text>
+        <Enum>50</Enum>
+        <Comment><![CDATA[ internal error ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INTERNAL_ERROR_3</Text>
+        <Enum>51</Enum>
+        <Comment><![CDATA[ internal error ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INTERNAL_ERROR_4</Text>
+        <Enum>52</Enum>
+        <Comment><![CDATA[ internal error ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INTERNAL_ERROR_5</Text>
+        <Enum>53</Enum>
+        <Comment><![CDATA[ internal error ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INTERNAL_ERROR_6</Text>
+        <Enum>54</Enum>
+        <Comment><![CDATA[ internal error ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INTERNAL_ERROR_7</Text>
+        <Enum>55</Enum>
+        <Comment><![CDATA[ internal error ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INTERNAL_ERROR_8</Text>
+        <Enum>56</Enum>
+        <Comment><![CDATA[ internal error ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INTERNAL_ERROR_9</Text>
+        <Enum>57</Enum>
+        <Comment><![CDATA[ internal error ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_WorkArrayADR</Text>
+        <Enum>58</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_tOnTime</Text>
+        <Enum>59</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_tOffTime</Text>
+        <Enum>60</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nMaxMovingPulses</Text>
+        <Enum>61</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nAdditionalPulsesAtLimits</Text>
+        <Enum>62</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fCtrlOutMax_Min</Text>
+        <Enum>63</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fDeltaMax</Text>
+        <Enum>64</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_tMovingTime</Text>
+        <Enum>65</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_tDeadTime</Text>
+        <Enum>66</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_tAdditionalMoveTimeAtLimits</Text>
+        <Enum>67</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fThreshold</Text>
+        <Enum>68</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_MEMCPY</Text>
+        <Enum>69</Enum>
+        <Comment><![CDATA[ MEMCPY failed ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_MEMSET</Text>
+        <Enum>70</Enum>
+        <Comment><![CDATA[ MEMSET failed ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nNumberOfColumns</Text>
+        <Enum>71</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_FileClose</Text>
+        <Enum>72</Enum>
+        <Comment><![CDATA[ File Close  failed ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_FileOpen</Text>
+        <Enum>73</Enum>
+        <Comment><![CDATA[ File Open failed ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_FileWrite</Text>
+        <Enum>74</Enum>
+        <Comment><![CDATA[ File Write failed ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fVeloNeg</Text>
+        <Enum>75</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fVeloPos</Text>
+        <Enum>76</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_DeadBandInput</Text>
+        <Enum>77</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_DeadBandOutput</Text>
+        <Enum>78</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_CycleDuration</Text>
+        <Enum>79</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_tStart</Text>
+        <Enum>80</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_StepHeigthTuningToLow</Text>
+        <Enum>81</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fMinLimitIsLessThanZero</Text>
+        <Enum>82</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fMaxLimitIsGreaterThan100</Text>
+        <Enum>83</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fStepSize</Text>
+        <Enum>84</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fOkRangeIsLessOrEqualZero</Text>
+        <Enum>85</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fForceRangeIsLessOrEqualfOkRange</Text>
+        <Enum>86</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPWMPeriod</Text>
+        <Enum>87</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_tMinimumPulseTime</Text>
+        <Enum>88</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_FileDelete</Text>
+        <Enum>89</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nNumberOfPwmOutputs</Text>
+        <Enum>90</Enum>
+        <Comment><![CDATA[ File Delete failed ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nPwmInputArray_SIZEOF</Text>
+        <Enum>91</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nPwmOutputArray_SIZEOF</Text>
+        <Enum>92</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nPwmWaitTimesConfig_SIZEOF</Text>
+        <Enum>93</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nPwmInternalData_SIZEOF</Text>
+        <Enum>94</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_SIZEOF</Text>
+        <Enum>95</Enum>
+        <Comment><![CDATA[ SiZEOF failed ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nOrderOfTheTransferfunction</Text>
+        <Enum>96</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nNumeratorArray_SIZEOF</Text>
+        <Enum>97</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nDenominatorArray_SIZEOF</Text>
+        <Enum>98</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_a_n_IsZero</Text>
+        <Enum>99</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_WorkArraySIZEOF</Text>
+        <Enum>100</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_MOVINGRANGE_MIN_MAX</Text>
+        <Enum>101</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_MOVINGTIME</Text>
+        <Enum>102</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_DEADTIME</Text>
+        <Enum>103</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fMinLimitIsGreaterThanfMaxLimit</Text>
+        <Enum>104</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_DataTableSIZEOF</Text>
+        <Enum>105</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_OutputVectorDescription</Text>
+        <Enum>106</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_TaskCycleTimeIsLessThanOneMillisecond</Text>
+        <Enum>107</Enum>
+        <Comment><![CDATA[  ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nMinMovingPulses</Text>
+        <Enum>108</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fAcceleration</Text>
+        <Enum>109</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fDeceleration</Text>
+        <Enum>110</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_StartAndTargetPos</Text>
+        <Enum>111</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fVelocity</Text>
+        <Enum>112</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fTargetPos</Text>
+        <Enum>113</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fStartPos</Text>
+        <Enum>114</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fMovingLength</Text>
+        <Enum>115</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_NT_GetTime</Text>
+        <Enum>116</Enum>
+        <Comment><![CDATA[ internal error NT_GetTime ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_No3PhaseSolutionPossible</Text>
+        <Enum>117</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fStartVelo</Text>
+        <Enum>118</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fTargetVelo</Text>
+        <Enum>119</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALID_NEW_PARAMETER_TYPE</Text>
+        <Enum>120</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fBaseTime</Text>
+        <Enum>121</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nOrderOfTheTransferfunction_SIZEOF</Text>
+        <Enum>122</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nFilterOrder</Text>
+        <Enum>124</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nCoefficientsArray_a_SIZEOF</Text>
+        <Enum>125</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nCoefficientsArray_b_SIZEOF</Text>
+        <Enum>126</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nDigitalFiterData_SIZEOF</Text>
+        <Enum>127</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nLogBuffer_SIZEOF</Text>
+        <Enum>128</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_LogBufferOverflow</Text>
+        <Enum>129</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nLogBuffer_ADR</Text>
+        <Enum>130</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nCoefficientsArray_a_ADR</Text>
+        <Enum>131</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nCoefficientsArray_b_ADR</Text>
+        <Enum>132</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nPwmInputArray_ADR</Text>
+        <Enum>133</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nPwmOutputArray_ADR</Text>
+        <Enum>134</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nPwmWaitTimesConfig_ADR</Text>
+        <Enum>135</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nPwmInternalData_ADR</Text>
+        <Enum>136</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nDigitalFiterData_ADR</Text>
+        <Enum>137</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nNumeratorArray_ADR</Text>
+        <Enum>138</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nDenominatorArray_ADR</Text>
+        <Enum>139</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nTransferfunction1Data_ADR</Text>
+        <Enum>140</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nTransferfunction2Data_ADR</Text>
+        <Enum>141</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_FileSeek</Text>
+        <Enum>142</Enum>
+        <Comment><![CDATA[ internal error FB_FileSeek ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_AmbientTempMaxIsLessThanAmbientTempMin</Text>
+        <Enum>143</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_ForerunTempMaxIsLessThanForerunTempMin</Text>
+        <Enum>144</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDLOGCYCLETIME</Text>
+        <Enum>145</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDVERSION_TcControllerToolbox</Text>
+        <Enum>146</Enum>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_Bandwidth</Text>
+        <Enum>147</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_NotchFrequency</Text>
+        <Enum>148</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_DampingCoefficient</Text>
+        <Enum>149</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_fKpIsLessThanZero</Text>
+        <Enum>150</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>eCTRL_ERROR_INVALIDPARAM_nSamplesToFilter</Text>
+        <Enum>151</Enum>
+        <Comment><![CDATA[ invalid parameter ]]></Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name Namespace="Tc2_ControllerToolbox">ST_CTRL_CYCLE_TIME_INTERPRETATION</Name>
+      <BitSize>128</BitSize>
+      <SubItem>
+        <Name>bInterpretCycleTimeAsTicks</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>fBaseTime</Name>
+        <Type>LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>64</BitOffs>
+      </SubItem>
+      <Properties>
+        <Property>
+          <Name>hide</Name>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name Namespace="Tc2_ControllerToolbox">FB_CTRL_LIN_INTERPOLATION</Name>
+      <BitSize>1920</BitSize>
+      <SubItem>
+        <Name>fIn</Name>
+        <Type>LREAL</Type>
+        <Comment><![CDATA[ input variable ]]></Comment>
+        <BitSize>64</BitSize>
+        <BitOffs>64</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Input</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>fManValue</Name>
+        <Type>LREAL</Type>
+        <Comment><![CDATA[ manual value to synchronize controller output ]]></Comment>
+        <BitSize>64</BitSize>
+        <BitOffs>128</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Input</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>bExtrapolate</Name>
+        <Type>BOOL</Type>
+        <Comment><![CDATA[ TRUE starts extrapolating based on previous values ]]></Comment>
+        <BitSize>8</BitSize>
+        <BitOffs>192</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Input</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>eMode</Name>
+        <Type Namespace="Tc2_ControllerToolbox">E_CTRL_MODE</Type>
+        <Comment><![CDATA[ operating mode ]]></Comment>
+        <BitSize>16</BitSize>
+        <BitOffs>208</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Input</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>fOut</Name>
+        <Type>LREAL</Type>
+        <Comment><![CDATA[ interpolated variable ]]></Comment>
+        <BitSize>64</BitSize>
+        <BitOffs>256</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Output</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>bInIsGreaterThanMaxElement</Name>
+        <Type>BOOL</Type>
+        <Comment><![CDATA[ TRUE indicates input is greater than the max. interpolation point ]]></Comment>
+        <BitSize>8</BitSize>
+        <BitOffs>320</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Output</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>bInIsLessThanMinElement</Name>
+        <Type>BOOL</Type>
+        <Comment><![CDATA[ TRUE indicates input is lesser than the min. interpolation point ]]></Comment>
+        <BitSize>8</BitSize>
+        <BitOffs>328</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Output</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>eState</Name>
+        <Type Namespace="Tc2_ControllerToolbox">E_CTRL_STATE</Type>
+        <Comment><![CDATA[ current state of the function block ]]></Comment>
+        <BitSize>16</BitSize>
+        <BitOffs>336</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Output</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>eErrorId</Name>
+        <Type Namespace="Tc2_ControllerToolbox">E_CTRL_ERRORCODES</Type>
+        <Comment><![CDATA[ error code ]]></Comment>
+        <BitSize>16</BitSize>
+        <BitOffs>352</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Output</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>bError</Name>
+        <Type>BOOL</Type>
+        <Comment><![CDATA[ TRUE, if error occurs ]]></Comment>
+        <BitSize>8</BitSize>
+        <BitOffs>368</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>Output</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>stParams</Name>
+        <Type ReferenceTo="true" Namespace="Tc2_ControllerToolbox">ST_CTRL_LIN_INTERPOLATION_PARAMS</Type>
+        <Comment><![CDATA[ parameter structure ]]></Comment>
+        <BitSize>64</BitSize>
+        <BitOffs>384</BitOffs>
+        <Properties>
+          <Property>
+            <Name>ItemType</Name>
+            <Value>InOut</Value>
+          </Property>
+        </Properties>
+      </SubItem>
+      <SubItem>
+        <Name>stInternalParams</Name>
+        <Type Namespace="Tc2_ControllerToolbox">ST_CTRL_LIN_INTERPOLATION_PARAMS</Type>
+        <BitSize>192</BitSize>
+        <BitOffs>448</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>stInternalCycleTimeInterpretation</Name>
+        <Type Namespace="Tc2_ControllerToolbox">ST_CTRL_CYCLE_TIME_INTERPRETATION</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>640</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>fTaskCycleTime</Name>
+        <Type>LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>768</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>fCtrlCycleTime</Name>
+        <Type>LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>832</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>nCtrlCycleTicks</Name>
+        <Type>UDINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>896</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>nActCtrlCycleTick</Name>
+        <Type>UDINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>928</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>eMode_old</Name>
+        <Type Namespace="Tc2_ControllerToolbox">E_CTRL_MODE</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>960</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>bFirstInit</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>976</BitOffs>
+        <Default>
+          <Value>1</Value>
+        </Default>
+      </SubItem>
+      <SubItem>
+        <Name>RefElement</Name>
+        <Type>LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1024</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>nRefElementSize</Name>
+        <Type>UINT</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>1088</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>nMaxTableElementNumber</Name>
+        <Type>UINT</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>1104</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>fSamplingPoint_left</Name>
+        <Type>LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1152</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>nSamplingPointRow_left</Name>
+        <Type>UINT</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>1216</BitOffs>
+        <Default>
+          <Value>1</Value>
+        </Default>
+      </SubItem>
+      <SubItem>
+        <Name>pSamplingPointADR_left</Name>
+        <Type PointerTo="1">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1280</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>fSamplingPoint_right</Name>
+        <Type>LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1344</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>pSamplingPointADR_right</Name>
+        <Type PointerTo="1">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1408</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>fDataPoint_left</Name>
+        <Type>LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1472</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>pDataPointADR_left</Name>
+        <Type PointerTo="1">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1536</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>fDataPoint_right</Name>
+        <Type>LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1600</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>pDataPointADR_right</Name>
+        <Type PointerTo="1">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1664</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>bRowOk</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>1728</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>nSamplingPointRow_left_old</Name>
+        <Type>UINT</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>1744</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>fIn_old</Name>
+        <Type>LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1792</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>nSearchTurnCounter</Name>
+        <Type>UINT</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>1856</BitOffs>
+      </SubItem>
+      <Action>
+        <Name>M_Error</Name>
+      </Action>
+      <Action>
+        <Name>M_Reset</Name>
+      </Action>
+      <Action>
+        <Name>M_Manual</Name>
+      </Action>
+      <Action>
+        <Name>M_Active</Name>
+      </Action>
+      <Action>
+        <Name>M_StateChange</Name>
+      </Action>
+      <Action>
+        <Name>M_Passive</Name>
+      </Action>
+      <Action>
+        <Name>M_Init</Name>
+      </Action>
+      <Properties>
+        <Property>
+          <Name>PouType</Name>
+          <Value>FunctionBlock</Value>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name>ST_MKS_275</Name>
+      <BitSize>2176</BitSize>
+      <ExtendsType>ST_VacuumGauge</ExtendsType>
+      <SubItem>
+        <Name>stIntrpParams</Name>
+        <Type Namespace="Tc2_ControllerToolbox">ST_CTRL_LIN_INTERPOLATION_PARAMS</Type>
+        <BitSize>192</BitSize>
+        <BitOffs>64</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>fbInterpolator</Name>
+        <Type Namespace="Tc2_ControllerToolbox">FB_CTRL_LIN_INTERPOLATION</Type>
+        <BitSize>1920</BitSize>
+        <BitOffs>256</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name>ST_MKS_500</Name>
+      <BitSize>320</BitSize>
+      <ExtendsType>ST_VacuumGauge</ExtendsType>
+      <SubItem>
+        <Name>tonIC</Name>
+        <Type Namespace="Tc2_Standard">TON</Type>
+        <Comment><![CDATA[ Simulation parameters]]></Comment>
+        <BitSize>256</BitSize>
+        <BitOffs>64</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name>VERSION</Name>
+      <BitSize>64</BitSize>
+      <SubItem>
+        <Name>uiMajor</Name>
+        <Type>UINT</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>uiMinor</Name>
+        <Type>UINT</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>16</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>uiServicePack</Name>
+        <Type>UINT</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>32</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>uiPatch</Name>
+        <Type>UINT</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>48</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{5456DAC5-9FA5-4A6B-B497-840FCC690FDD}" Namespace="PLC" TcBaseType="true">PlcLicenseInfo</Name>
+      <BitSize>1024</BitSize>
+      <SubItem>
+        <Name>LicenseId</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000021}">GUID</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>Instances</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>128</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>LicenseName</Name>
+        <Type GUID="{18071995-0000-0000-0000-00010000005F}">STRING(95)</Type>
+        <BitSize>768</BitSize>
+        <BitOffs>256</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{C1C52E30-BC0B-44CA-BF39-E2FE7F2D145C}" Namespace="PLC" TcBaseType="true">PlcAppSystemInfo</Name>
+      <BitSize>2048</BitSize>
+      <SubItem>
+        <Name>ObjId</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000F}">OTCID</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>TaskCnt</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>32</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>OnlineChangeCnt</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>64</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>Flags</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000007}">DWORD</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>96</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>AdsPort</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>128</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>BootDataLoaded</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>144</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>OldBootData</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>152</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>AppTimestamp</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000004C}">DT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>160</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>KeepOutputsOnBP</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>192</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>ShutdownInProgress</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>200</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>LicensesPending</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>208</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>BSODOccured</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>216</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>TComSrvPtr</Name>
+        <Type GUID="{00000030-0000-0000-E000-000000000064}">ITComObjectServer</Type>
+        <BitSize X64="64">32</BitSize>
+        <BitOffs>256</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>AppName</Name>
+        <Type GUID="{18071995-0000-0000-0000-00010000003F}">STRING(63)</Type>
+        <BitSize>512</BitSize>
+        <BitOffs>512</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>ProjectName</Name>
+        <Type GUID="{18071995-0000-0000-0000-00010000003F}">STRING(63)</Type>
+        <BitSize>512</BitSize>
+        <BitOffs>1024</BitOffs>
+      </SubItem>
+      <Hides>
+        <Hide GUID="{D91E046A-A488-4D27-8D43-0F3C40ED5081}" />
+        <Hide GUID="{5DCEB2BC-E196-43AD-80B7-EBACF31A430B}" />
+        <Hide GUID="{1B9FDDE4-B3B7-4F0F-AB14-24EDC2F643E7}" />
+      </Hides>
+    </DataType>
+    <DataType>
+      <Name GUID="{56294066-FFF7-46F3-8206-FA06A30B13BA}" Namespace="PLC" TcBaseType="true">PlcTaskSystemInfo</Name>
+      <BitSize>1024</BitSize>
+      <SubItem>
+        <Name>ObjId</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000F}">OTCID</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>CycleTime</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>32</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>Priority</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>64</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>AdsPort</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+        <BitSize>16</BitSize>
+        <BitOffs>80</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>CycleCount</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>96</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DcTaskTime</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000C}">LINT</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>128</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>LastExecTime</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000008}">UDINT</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>192</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>FirstCycle</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>224</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>CycleTimeExceeded</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>232</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>InCallAfterOutputUpdate</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>240</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>RTViolation</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>248</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>TaskName</Name>
+        <Type GUID="{18071995-0000-0000-0000-00010000003F}">STRING(63)</Type>
+        <BitSize>512</BitSize>
+        <BitOffs>512</BitOffs>
+      </SubItem>
+      <Hides>
+        <Hide GUID="{6A76D020-03A2-465C-A678-C341951E9EF3}" />
+        <Hide GUID="{6F7D679F-72A0-4831-A7F1-085F839743ED}" />
+      </Hides>
+    </DataType>
+  </DataTypes>
+  <Modules>
+    <Module GUID="{5CA18187-4D2D-454F-82C2-7C2F6FE8B2F1}" TcSmClass="TComPlcObjDef">
+      <Name>VacuumSystemSimulator</Name>
+      <CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+      <Licenses>
+        <License>
+          <LicenseId>{d4390dea-a64d-494d-9e09-275326dbb0cb}</LicenseId>
+          <Comment>TC3 PLC-HMI (RT)</Comment>
+        </License>
+        <License>
+          <LicenseId>{777f1598-583b-4503-99bb-7c02e0abd97e}</LicenseId>
+          <Comment>TF4100 TC3 Controller Toolbox</Comment>
+        </License>
+        <License>
+          <LicenseId>{bca6ee0a-9ce1-4d3f-98ca-413abc0d94fd}</LicenseId>
+          <Comment>TF6340 TC3 Serial-Communication</Comment>
+        </License>
+        <License>
+          <LicenseId>{FDE02854-39A7-440C-9EAE-C234A16A3CED}</LicenseId>
+          <Comment>TC3 PLC-HMI</Comment>
+        </License>
+      </Licenses>
+      <Contexts>
+        <Context>
+          <Id NeedCalleeCall="true" OTCID="#x01010011">0</Id>
+          <Name>PlcTask</Name>
+          <ManualConfig>
+            <OTCID>#x02010020</OTCID>
+          </ManualConfig>
+        </Context>
+        <Context>
+          <Id NeedCalleeCall="true" OTCID="#x01010012">1</Id>
+          <Name>VISU_TASK</Name>
+          <ManualConfig>
+            <OTCID>#x02010040</OTCID>
+          </ManualConfig>
+        </Context>
+      </Contexts>
+      <Parameters />
+      <DataAreas>
+        <DataArea>
+          <AreaNo AreaType="InputDst" CreateSymbols="true">0</AreaNo>
+          <Name>PlcTask Inputs</Name>
+          <ContextId>0</ContextId>
+          <ByteSize>2031616</ByteSize>
+          <Symbol>
+            <Name>GVL_IO.i_xVAC_SPEC_ep2624s01c01</Name>
+            <Comment><![CDATA[ VAC-SPEC]]></Comment>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>5603624</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.i_xVAC_SPEC_ep2624s01c02</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>5605128</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.i_xVAC_SPEC_ep2624s01c03</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>5679480</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.i_xVAC_SPEC_ep2624s01c04</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>5681784</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.i_xVAC_SPEC_ep2338s02c02</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8883360</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.i_xVAC_SPEC_ep2338s02c05</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8883384</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.i_xVAC_SPEC_ep2338s02c08</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890768</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.i_xVAC_SPEC_ep2339s03c01</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890776</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.i_xVAC_SPEC_ep2339s03c04</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890800</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.i_xVAC_SPEC_ep2339s03c05</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890808</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.i_xVAC_SPEC_ep2339s03c08</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890832</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.i_xVAC_SPEC_ep2339s03c13</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890872</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.i_xVAC_SPEC_ep2339s03c16</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890896</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="OutputSrc" CreateSymbols="true">1</AreaNo>
+          <Name>PlcTask Outputs</Name>
+          <ContextId>0</ContextId>
+          <ByteSize>2031616</ByteSize>
+          <Symbol>
+            <Name>GVL_IO.q_xVAC_SPEC_ep2338s02c01</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8883352</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_xVAC_SPEC_ep2338s02c03</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8883368</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_xVAC_SPEC_ep2338s02c04</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8883376</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_xVAC_SPEC_ep2338s02c06</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890752</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_xVAC_SPEC_ep2338s02c07</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890760</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_xVAC_SPEC_ep2339s03c02</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890784</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_xVAC_SPEC_ep2339s03c03</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890792</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_xVAC_SPEC_ep2339s03c06</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890816</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_xVAC_SPEC_ep2339s03c07</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890824</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_xVAC_SPEC_ep2339s03c09</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890840</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_xVAC_SPEC_ep2339s03c10</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890848</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_xVAC_SPEC_ep2339s03c11</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890856</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_xVAC_SPEC_ep2339s03c12</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890864</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_xVAC_SPEC_ep2339s03c14</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890880</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_xVAC_SPEC_ep2339s03c15</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890888</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_iVAC_SPEC_ep3174s04c01</Name>
+            <BitSize>16</BitSize>
+            <BaseType>INT</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890912</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_iVAC_SPEC_ep3174s04c02</Name>
+            <BitSize>16</BitSize>
+            <BaseType>INT</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890928</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_iVAC_SPEC_ep3174s04c03</Name>
+            <BitSize>16</BitSize>
+            <BaseType>INT</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890944</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_IO.q_iVAC_SPEC_ep3174s04c04</Name>
+            <BitSize>16</BitSize>
+            <BaseType>INT</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8890960</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="Internal" CreateSymbols="true">3</AreaNo>
+          <Name>PlcTask Internal</Name>
+          <ContextId>0</ContextId>
+          <ByteSize>2031616</ByteSize>
+          <Symbol>
+            <Name>GVL_PfeifferParameters.gcMaxPfeifferPumps</Name>
+            <Comment><![CDATA[maximum size of the Pfeiffer turbo pump array for a single port]]></Comment>
+            <BitSize>16</BitSize>
+            <BaseType>INT</BaseType>
+            <Default>
+              <Value>20</Value>
+            </Default>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>4096128</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Global_Variables.nCTRL_LOGGER_DATA_ARRAY_SIZE</Name>
+            <BitSize>16</BitSize>
+            <BaseType>UINT</BaseType>
+            <Default>
+              <Value>10</Value>
+            </Default>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>4096144</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>p_Pumps.xRun</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <BitOffs>5603592</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>p_SoftIO.xDummy</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <BitOffs>5603600</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>p_Pumps.ptm01</Name>
+            <BitSize>448</BitSize>
+            <BaseType>FB_PfeifferTurboPump</BaseType>
+            <BitOffs>5606016</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>p_Pumps.fbRP_01</Name>
+            <BitSize>256</BitSize>
+            <BaseType>FB_RoughPump</BaseType>
+            <BitOffs>5606464</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>p_Valves.fbVGC_01</Name>
+            <BitSize>832</BitSize>
+            <BaseType>FB_VacuumValve</BaseType>
+            <BitOffs>5610688</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>p_Valves.fbVGC_02</Name>
+            <BitSize>832</BitSize>
+            <BaseType>FB_VacuumValve</BaseType>
+            <BitOffs>5611520</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>p_Valves.fbVCC_01</Name>
+            <BitSize>832</BitSize>
+            <BaseType>FB_VacuumValve</BaseType>
+            <BitOffs>5612352</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>p_Valves.fbVCC_02</Name>
+            <BitSize>832</BitSize>
+            <BaseType>FB_VacuumValve</BaseType>
+            <BitOffs>5613184</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>p_VirtualLeaks.fbVirtualLeak</Name>
+            <BitSize>4672</BitSize>
+            <BaseType>FB_VirtualLeak</BaseType>
+            <BitOffs>5614976</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_CONSTANT.ATM</Name>
+            <Comment><![CDATA[ Atmospheric pressure in Torr]]></Comment>
+            <BitSize>32</BitSize>
+            <BaseType>REAL</BaseType>
+            <Default>
+              <Value>760</Value>
+            </Default>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>5679328</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_Devices.stVGC_01</Name>
+            <Comment><![CDATA[ isolation valve]]></Comment>
+            <BitSize>24</BitSize>
+            <BaseType>ST_VacuumValve</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>5679456</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_Devices.stVGC_02</Name>
+            <Comment><![CDATA[ window valve]]></Comment>
+            <BitSize>24</BitSize>
+            <BaseType>ST_VacuumValve</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>5681736</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_Devices.stVCC_01</Name>
+            <Comment><![CDATA[ vent valve]]></Comment>
+            <BitSize>24</BitSize>
+            <BaseType>ST_VacuumValve</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>5681760</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_Devices.stVlVent</Name>
+            <Comment><![CDATA[ Volumes 
+ I have no idea how the volumes will actually scale...
+ vent volume (very very large volume at ATM T)]]></Comment>
+            <BitSize>96</BitSize>
+            <BaseType>ST_Volume</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8882752</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_Devices.stVlCameraVessel</Name>
+            <Comment><![CDATA[ Main Chamber 
+ camera vessel]]></Comment>
+            <BitSize>96</BitSize>
+            <BaseType>ST_Volume</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8882848</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_Devices.stVlIsoWindow</Name>
+            <Comment><![CDATA[ volume between isolation valve and window valve]]></Comment>
+            <BitSize>96</BitSize>
+            <BaseType>ST_Volume</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8882944</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_Devices.stVlEXP</Name>
+            <Comment><![CDATA[ Upstream volume ]]></Comment>
+            <BitSize>96</BitSize>
+            <BaseType>ST_Volume</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8883040</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_Devices.stVlFlUp</Name>
+            <Comment><![CDATA[ Foreline 
+ turbo to rough valve]]></Comment>
+            <BitSize>96</BitSize>
+            <BaseType>ST_Volume</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8883136</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_Devices.stVlFlDn</Name>
+            <Comment><![CDATA[ foreline to the rough pump]]></Comment>
+            <BitSize>96</BitSize>
+            <BaseType>ST_Volume</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8883232</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_Devices.stVCC_02</Name>
+            <Comment><![CDATA[ turbo backing valve]]></Comment>
+            <BitSize>24</BitSize>
+            <BaseType>ST_VacuumValve</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8883328</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_Devices.stVG_01</Name>
+            <Comment><![CDATA[ camera vessel pirani]]></Comment>
+            <BitSize>2176</BitSize>
+            <BaseType>ST_MKS_275</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8883392</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_Devices.stVG_02</Name>
+            <Comment><![CDATA[ camera vessel cold cathode]]></Comment>
+            <BitSize>320</BitSize>
+            <BaseType>ST_MKS_500</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8885568</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_Devices.stVG_03</Name>
+            <Comment><![CDATA[ foreline pirani]]></Comment>
+            <BitSize>2176</BitSize>
+            <BaseType>ST_MKS_275</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8885888</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_Devices.stPTM_01</Name>
+            <Comment><![CDATA[ Pumps ]]></Comment>
+            <BitSize>1344</BitSize>
+            <BaseType>ST_MechPump</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8888064</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>GVL_Devices.stRP_01</Name>
+            <BitSize>1344</BitSize>
+            <BaseType>ST_MechPump</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8889408</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Constants.bLittleEndian</Name>
+            <Comment><![CDATA[ Does the target support an FPU]]></Comment>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Default>
+              <Value>1</Value>
+            </Default>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8895200</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Constants.bSimulationMode</Name>
+            <Comment><![CDATA[ Does the target support an FPU]]></Comment>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Default>
+              <Value>0</Value>
+            </Default>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8895208</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Constants.nRegisterSize</Name>
+            <Comment><![CDATA[ Does the target support an FPU]]></Comment>
+            <BitSize>16</BitSize>
+            <BaseType>WORD</BaseType>
+            <Default>
+              <Value>64</Value>
+            </Default>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8895216</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Constants.nPackMode</Name>
+            <Comment><![CDATA[ Does the target support an FPU]]></Comment>
+            <BitSize>16</BitSize>
+            <BaseType>UINT</BaseType>
+            <Default>
+              <Value>8</Value>
+            </Default>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8899296</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Constants.bFPUSupport</Name>
+            <BitSize>8</BitSize>
+            <BaseType>BOOL</BaseType>
+            <Default>
+              <Value>1</Value>
+            </Default>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8899312</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Constants.RuntimeVersion</Name>
+            <Comment><![CDATA[ Does the target support an FPU]]></Comment>
+            <BitSize>64</BitSize>
+            <BaseType>VERSION</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8979200</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Constants.CompilerVersion</Name>
+            <Comment><![CDATA[ Does the target support an FPU]]></Comment>
+            <BitSize>64</BitSize>
+            <BaseType>VERSION</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8979264</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TwinCAT_LicenseInfoVarList._LicenseInfo</Name>
+            <BitSize>1024</BitSize>
+            <BaseType GUID="{5456DAC5-9FA5-4A6B-B497-840FCC690FDD}">PlcLicenseInfo</BaseType>
+            <ArrayInfo>
+              <LBound>1</LBound>
+              <Elements>1</Elements>
+            </ArrayInfo>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8979328</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TwinCAT_SystemInfoVarList._AppInfo</Name>
+            <BitSize>2048</BitSize>
+            <BaseType GUID="{C1C52E30-BC0B-44CA-BF39-E2FE7F2D145C}">PlcAppSystemInfo</BaseType>
+            <Properties>
+              <Property>
+                <Name>no_init</Name>
+              </Property>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8980352</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TwinCAT_SystemInfoVarList._TaskInfo</Name>
+            <BitSize>2048</BitSize>
+            <BaseType GUID="{56294066-FFF7-46F3-8206-FA06A30B13BA}">PlcTaskSystemInfo</BaseType>
+            <ArrayInfo>
+              <LBound>1</LBound>
+              <Elements>2</Elements>
+            </ArrayInfo>
+            <Properties>
+              <Property>
+                <Name>no_init</Name>
+              </Property>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8982400</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>TwinCAT_SystemInfoVarList._DummyLicenseInfo</Name>
+            <BitSize>1024</BitSize>
+            <BaseType GUID="{5456DAC5-9FA5-4A6B-B497-840FCC690FDD}">PlcLicenseInfo</BaseType>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>8984448</BitOffs>
+          </Symbol>
+        </DataArea>
+      </DataAreas>
+      <Deployment />
+      <Properties>
+        <Property>
+          <Name>ChangeDate</Name>
+          <Value>2016-04-26T11:30:29</Value>
+        </Property>
+        <Property>
+          <Name>GeneratedCodeSize</Name>
+          <Value>749568</Value>
+        </Property>
+        <Property>
+          <Name>GlobalDataSize</Name>
+          <Value>647168</Value>
+        </Property>
+      </Properties>
+    </Module>
+  </Modules>
+</TcModuleClass>

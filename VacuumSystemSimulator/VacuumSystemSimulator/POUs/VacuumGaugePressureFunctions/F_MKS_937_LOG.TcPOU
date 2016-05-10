@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+  <POU Name="F_MKS_937_LOG" Id="{c729e66d-ee42-43c6-9d14-ed17a4e9dc63}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_MKS_937_LOG : INT
+VAR_INPUT
+	rPress	:	REAL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* Converts real pressure to digital voltage for 937A/B *)
+IF rPress <> 0 THEN
+	F_MKS_937_LOG := REAL_TO_INT( (32767/10) * (0.6* LOG( rPress ) + 7.2) );
+ELSE
+	F_MKS_937_LOG := 0;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -6,6 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{B1E792BE-AA5F-4E3C-8C82-674BF9C0715B}") = "VacuumSystemSimulator", "VacuumSystemSimulator\VacuumSystemSimulator.tsproj", "{B44D9628-811D-4EDC-8997-AFB963B082E5}"
 EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|TwinCAT CE7 (ARMV7) = Debug|TwinCAT CE7 (ARMV7)
 		Debug|TwinCAT RT (x64) = Debug|TwinCAT RT (x64)

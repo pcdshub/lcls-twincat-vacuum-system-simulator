@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+  <DUT Name="ST_VacuumValve" Id="{f7422996-9a0c-4118-9e9f-b51af9eb0c62}">
+    <Declaration><![CDATA[TYPE ST_VacuumValve :
+STRUCT
+	q_xOpnLS : BOOL;
+	q_xClsLS : BOOL;
+	i_xSol	:	BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

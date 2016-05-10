@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+  <POU Name="FB_VacuumValve" Id="{d63e444c-fdb6-4b5b-aa83-cba54cfcf909}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_VacuumValve
+VAR_INPUT
+	ValveTime : TIME := T#500ms;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR_IN_OUT
+	stAVol : ST_Volume;
+	stBVol : ST_Volume;
+	stValve : ST_VacuumValve;
+END_VAR
+VAR
+	ClsTON:TON;
+	OpnTON:TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* 
+Vacuum Valve Simulation
+
+A valve has two ports, A and B.
+And two states, open or closed. (transition = open)
+Valve open:
+Average of A and B is written to both sides.
+
+Limit switches
+Solenoid goes high:
+1. Normal switch goes low
+2. Timer for motion elapses
+3. Actuated switch goes high
+
+2016-2-18 A. Wallace
+*)
+
+(* Pressure transfer *)
+IF NOT stValve.q_xClsLS THEN
+	stBVol.rPressure := (stAVol.rPressure*stAVol.rVolume + stBVol.rPressure*stBVol.rVolume)/(stAVol.rVolume+stBVol.rVolume);
+	stAVol.rPressure := stBVol.rPressure;
+END_IF
+
+(* Valve motion *)
+OpnTON.IN := stValve.i_xSol;
+OpnTON.PT := ValveTime - ClsTON.ET;
+OpnTON(Q=>stValve.q_xOpnLS);
+
+
+ClsTON.IN := NOT stValve.i_xSol;
+ClsTON.PT := ValveTime - OpnTON.ET;
+ClsTON(Q=>stValve.q_xClsLS);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

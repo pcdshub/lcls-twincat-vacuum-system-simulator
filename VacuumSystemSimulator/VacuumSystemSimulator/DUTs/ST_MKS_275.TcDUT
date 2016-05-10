@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+  <DUT Name="ST_MKS_275" Id="{48e714fa-c5af-46d4-8061-4735bf65c56b}">
+    <Declaration><![CDATA[TYPE ST_MKS_275 EXTENDS ST_VacuumGauge :
+STRUCT
+	stIntrpParams	:	ST_CTRL_LIN_INTERPOLATION_PARAMS;
+	fbInterpolator	:	FB_CTRL_LIN_INTERPOLATION := (
+		bExtrapolate := FALSE
+);
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

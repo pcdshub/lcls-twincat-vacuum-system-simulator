@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+  <GVL Name="GVL_VSS_CONSTANT" Id="{ae843ad2-19d5-47c3-859e-73fc00707dcb}">
+    <Declaration><![CDATA[VAR_GLOBAL CONSTANT
+	ATM	:	REAL := 760; // Atmospheric pressure in Torr
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

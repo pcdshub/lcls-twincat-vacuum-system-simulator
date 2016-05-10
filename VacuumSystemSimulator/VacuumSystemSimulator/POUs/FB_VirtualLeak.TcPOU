@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+  <POU Name="FB_VirtualLeak" Id="{8704b15f-8ebf-40d8-bbd4-8f3421da2b7b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_VirtualLeak
+VAR_INPUT
+END_VAR
+VAR_IN_OUT
+	stVol	:	ST_Volume;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	fbRand	:	DRAND;
+	lrRandomFraction: LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* Virtual Leak
+
+A virtual leak accounts for outgassing and trapped volumes in the vacuum
+system. We wanted this system to be real, so we'll need virtual leaks.
+
+Note: A virtual leak, such as this one, can also serve as a leak simulator.
+
+This FB uses a virtual leak factor, the volume, and pressure of a vessel, to
+limit a random injection of mass into the vessel.
+
+2016-3-6, A. Wallace
+
+*)
+
+fbRand.Seed := 0;
+fbRand(Num=>lrRandomFraction);
+// The limit of virtual leaks maybe should be something less generic than atm.
+stVol.rPressure := MIN( ATM, stVol.rPressure  + LREAL_TO_REAL(lrRandomFraction) * stVol.rVLeak);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+  <DUT Name="ST_Volume" Id="{356f8840-2800-4a04-b14c-73f1ee64e186}">
+    <Declaration><![CDATA[TYPE ST_Volume :
+STRUCT
+	rVolume : REAL;
+	rPressure : REAL; //in Torr
+	rVLeak	:	REAL; //Torr*L/cycle
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
