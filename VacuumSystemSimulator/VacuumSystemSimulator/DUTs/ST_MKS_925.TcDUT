@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4019.2">
+  <DUT Name="ST_MKS_925" Id="{432a3417-2042-4dcd-9dc9-c4ee7d4a0ebb}">
+    <Declaration><![CDATA[TYPE ST_MKS_925 EXTENDS ST_VacuumGauge :
+STRUCT
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

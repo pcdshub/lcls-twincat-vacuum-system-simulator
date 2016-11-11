@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4019.2">
+  <DUT Name="ST_MKS_909" Id="{2d5baa0e-8e32-47a1-a5af-5d0c881a9361}">
+    <Declaration><![CDATA[TYPE ST_MKS_909 EXTENDS ST_VacuumGauge:
+STRUCT
+
+	//Ion gauges only
+	i_xHvOn	:	BOOL;
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
