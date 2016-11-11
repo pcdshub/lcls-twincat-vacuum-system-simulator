@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4019.2">
   <POU Name="FB_Aperture" Id="{35f5ab3e-3a91-4ce3-b2be-118fed7b4106}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Aperture
 VAR_INPUT
@@ -38,6 +38,8 @@ DeltaPb := (Va*(Pa-Pb))/(Va+Vb);
 
 stAVol.rPressure := Pa + i_rC*DeltaPa;
 stBVol.rPressure := Pb + i_rC*DeltaPb;
+
+//need to put in when Pa== Pb and when Pa<Pb conditions
 
 ]]></ST>
     </Implementation>
