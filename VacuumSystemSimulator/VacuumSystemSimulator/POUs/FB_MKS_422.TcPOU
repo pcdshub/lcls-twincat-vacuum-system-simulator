@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
   <POU Name="FB_MKS_422" Id="{1e7b5c4b-867d-428c-a822-12e2cdc9d71f}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_MKS_422
 VAR_INPUT
@@ -35,7 +35,7 @@ stGauge.tonIC();
 
 
 (* Pressure *)
-IF stgauge.tonIC.Q THEN
+IF stGauge.tonIC.Q THEN
 	stGauge.q_iRawPress := F_MKS_937_LOG(stGauge.rPress);
 ELSIF stGauge.i_xHvOn THEN
 	stGauge.q_iRawPress := F_MKS_937_LOG(1E-11); // gauge on, waiting for spark
@@ -43,5 +43,9 @@ ELSE
 	stGauge.q_iRawPress := F_MKS_937_LOG(1E-4); // gauge not on
 END_IF]]></ST>
     </Implementation>
+    <LineIds Name="FB_MKS_422">
+      <LineId Id="3" Count="23" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>
