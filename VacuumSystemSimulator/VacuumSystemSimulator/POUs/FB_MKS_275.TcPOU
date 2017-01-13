@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="FB_MKS_275" Id="{7f664acb-27b6-40f8-83da-74e352757f93}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_MKS_275
+VAR_INPUT
+	stVolume : ST_Volume;
+	q_xGaugeConnected	:	BOOL;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR_IN_OUT
+	stGauge	:	ST_MKS_275;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* 
+MKS 275 Vacuum gauge
+
+A vacuum gauge takes as input, the pressure of the volume it is attached to,
+and produces on its analog output, a corresponding voltage.
+
+
+*)
+
+IF q_xGaugeConnected THEN
+	(*set gauge real pressure based on chamber real pressure*)
+	stGauge.rPress := stVolume.rPressure;
+	(*set gauge raw pressure based on transformation of real pressure*)
+	stGauge.q_iRawPress := F_MKS_275(stGauge);// gauge on
+ELSE
+	stGauge.rPress := 0;
+	stGauge.q_iRawPress := 0; // gauge not on ??
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_MKS_275">
+      <LineId Id="15" Count="7" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="33" Count="2" />
+      <LineId Id="29" Count="1" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
