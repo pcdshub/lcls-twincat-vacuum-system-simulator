@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="F_MKS_903" Id="{b50b00c5-7b12-4f5b-8c1a-ce4866ad85f1}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_MKS_903 : INT
+VAR_INPUT
+	stGauge	: ST_MKS_903;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+MKS 907 voltage calculation 
+
+Does the inverse of the FB 903 from the vacuum library
+
+A. Pai, 2017-1-13
+*)
+IF stGauge.rPress <> 0 THEN
+	F_MKS_903 := REAL_TO_INT( (32767/10) * (LOG( stGauge.rPress ) + 11) );
+ELSE
+	F_MKS_903 := 0;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="F_MKS_903">
+      <LineId Id="14" Count="5" />
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
