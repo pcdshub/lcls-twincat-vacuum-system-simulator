@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4019.2">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
   <POU Name="FB_Aperture" Id="{35f5ab3e-3a91-4ce3-b2be-118fed7b4106}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Aperture
 VAR_INPUT
@@ -13,7 +13,7 @@ VAR_IN_OUT
 END_VAR
 VAR
 	Pa, Va, Pb, Vb	:	REAL;
-	DeltaPa, DeltaPb	:	REAL;
+	//DeltaPa, DeltaPb	:	REAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -23,6 +23,9 @@ A. Wallace 2016-5-5
 An aperture is like a valve that is permanently open but allows a restricted
 amount of mass to flow through it. It has no polarity, that is to say,
 it flows the same in either direction.
+
+An aperture is the interface between two chambers and imitates the realistic
+flow rate to adjust for changing pressures
 *)
 
 // Mass flow is dependent upon pressure differential, mass flow limited by aperture size.
@@ -33,15 +36,29 @@ Va := stAVol.rVolume;
 Pb := stBVol.rPressure;
 Vb := stBVol.rVolume;
 
-DeltaPa := (Vb*(Pb-Pa))/(Va+Vb);
-DeltaPb := (Va*(Pa-Pb))/(Va+Vb);
+(*simplified version of Mass in chamber = old mass - mass flow rate * time
+  mass flow rate = (Pa-Pb)*(Conductance between chambers)
+  mass = Pa*Va (torr * L) it should be called energy(Joules) but mass easier to visualize.
+*)
 
-stAVol.rPressure := Pa + i_rC*DeltaPa;
-stBVol.rPressure := Pb + i_rC*DeltaPb;
+stAVol.rPressure := Pa - (Pa-Pb)*i_rC*tSec/Va;
+stBVol.rPressure := Pb + (Pa-Pb)*i_rC*tSec/Vb;
 
 //need to put in when Pa== Pb and when Pa<Pb conditions
 
 ]]></ST>
     </Implementation>
+    <LineIds Name="FB_Aperture">
+      <LineId Id="3" Count="4" />
+      <LineId Id="44" Count="2" />
+      <LineId Id="8" Count="9" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="47" Count="1" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="22" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>
