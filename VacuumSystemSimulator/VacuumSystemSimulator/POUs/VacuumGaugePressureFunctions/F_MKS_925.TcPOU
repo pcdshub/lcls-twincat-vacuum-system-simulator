@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="F_MKS_925" Id="{091305aa-ead4-4be0-a800-2014f056c6d2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_MKS_925 : INT
+VAR_INPUT
+	stGauge	:	ST_MKS_925;
+END_VAR
+VAR
+	rVoltage	:	REAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+MKS 925 voltage calculation 
+
+Does the inverse of the FB 925 from the vacuum library
+
+A. Pai, 2017-1-13
+*)
+
+
+(*Calculate signal based on voltage*)
+IF stGauge.rPress <> 0 THEN
+	
+	(*Calculate volatage based on real pressure*)
+	rVoltage:= LOG(stGauge.rPress) + 6;
+	(*Calculate signal based on voltage*)
+	F_MKS_925	:= REAL_TO_INT( rVoltage * 32767/10 );
+	
+ELSE
+	F_MKS_925 := 0;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="F_MKS_925">
+      <LineId Id="20" Count="5" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="27" Count="2" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
