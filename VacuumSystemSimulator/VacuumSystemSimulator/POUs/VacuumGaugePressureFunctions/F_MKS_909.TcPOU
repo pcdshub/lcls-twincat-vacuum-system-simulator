@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="F_MKS_909" Id="{0f108d56-1826-44ef-b8a5-046ec9eba208}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_MKS_909 : INT
+VAR_INPUT
+	stGauge	:	ST_MKS_909;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* Converts real pressure to digital voltage for 937A/B *)
+IF stGauge.rPress <> 0 THEN
+	F_MKS_909 := REAL_TO_INT( (32767/10) * (LOG( stGauge.rPress ) + 10) );
+ELSE
+	F_MKS_909 := 0;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="F_MKS_909">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
