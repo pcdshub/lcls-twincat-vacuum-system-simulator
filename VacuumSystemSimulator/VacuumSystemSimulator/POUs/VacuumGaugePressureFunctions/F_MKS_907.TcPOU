@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="F_MKS_907" Id="{3f284959-eb90-420f-8d73-8dacd4272e80}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_MKS_907 : INT
+VAR_INPUT
+	stGauge	: ST_MKS_907;
+END_VAR
+VAR CONSTANT
+	caPvsV	:	ARRAY[1..55,1..2] OF REAL := [
+		1.00E-03,0.387,
+		2.00E-03,0.397,
+		4.00E-03,0.418,
+		6.00E-03,0.437,
+		8.00E-03,0.456,
+		1.00E-02,0.473,
+		2.00E-02,0.551,
+		3.00E-02,0.619,
+		4.00E-02,0.679,
+		5.00E-02,0.733,
+		6.00E-02,0.783,
+		7.00E-02,0.830,
+		8.00E-02,0.874,
+		9.00E-02,0.915,		
+		1.00E-01,0.955,
+		2.00E-01,1.271,
+		3.00E-01,1.508,
+		4.00E-01,1.701,
+		5.00E-01,1.864,
+		6.00E-01,2.007,
+		7.00E-01,2.133,
+		8.00E-01,2.246,
+		9.00E-01,2.348,		
+		1.00E+00,2.442,
+		2.00E+00,3.083,
+		3.00E+00,3.452,
+		4.00E+00,3.698,
+		5.00E+00,3.875,
+		6.00E+00,4.009,
+		7.00E+00,4.114,
+		8.00E+00,4.198,
+		9.00E+00,4.268,		
+		1.00E+01,4.327,
+		2.00E+01,4.627,
+		2.50E+01,4.695, 
+		3.00E+01,4.743,
+		4.00E+01,4.805,
+		5.00E+01,4.843,
+		6.00E+01,4.872,
+		7.00E+01,4.891,
+		7.50E+01,4.898,
+		8.00E+01,4.904,
+		9.00E+01,4.914,		
+		1.00E+02,4.923,
+		2.00E+02,4.987,
+		2.50E+02,5.025, 
+		3.00E+02,5.071,
+		4.00E+02,5.183,
+		5.00E+02,5.301,
+		6.00E+02,5.397,
+		7.00E+02,5.478,
+		7.50E+02,5.514,
+		8.00E+02,5.548,
+		9.00E+02,5.610,
+		1.00E+03,5.666,
+	]; //the conversion table for pressure to analog (super) non-linear voltage
+
+	caPvsVRows	:	UINT	:= 55;
+END_VAR
+VAR
+	rVoltage	:	REAL;
+	F: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+MKS 907 voltage calculation 
+
+Does the inverse of the FB 907 from the vacuum library
+
+A. Pai, 2017-1-13
+*)
+
+IF stGauge.rPress <> 0 THEN
+
+	(* Run the interpolator to get a new value for the analog voltage *)
+	stGauge.stIntrpParams.nDataTable_NumberOfRows := 55;
+	stGauge.stIntrpParams.pDataTable_ADR	:=	ADR(caPvsV); //we point each time this block gets called to avoid online changes shifting memory around and potentially screwing up this pointer.
+	stGauge.stIntrpParams.nDataTable_SIZEOF	:=	SIZEOF(caPvsV);
+	stGauge.fbInterpolator.fIn	:=	stGauge.rPress;
+	stGauge.fbInterpolator(stParams := stGauge.stIntrpParams, fOut => rVoltage);
+
+	(*Calculate signal based on voltage*)
+	F_MKS_907	:= REAL_TO_INT( rVoltage * 32767/10 );
+
+ELSE
+	F_MKS_907 :=0;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="F_MKS_907">
+      <LineId Id="9" Count="0" />
+      <LineId Id="14" Count="1" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="21" Count="4" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="151" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="153" Count="1" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
