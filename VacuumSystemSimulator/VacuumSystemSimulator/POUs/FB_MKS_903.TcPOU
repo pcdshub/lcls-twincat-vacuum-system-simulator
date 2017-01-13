@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="FB_MKS_903" Id="{e582a674-b22f-4b02-9f19-8dbcc2feec6a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_MKS_903
+VAR_INPUT
+	stVolume : ST_Volume;
+	q_xGaugeConnected	:	BOOL;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR_IN_OUT
+	stGauge	:	ST_MKS_903;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* 
+MKS 909 Vacuum gauge
+
+A vacuum gauge takes as input, the pressure of the volume it is attached to,
+and produces on its analog output, a corresponding voltage.
+
+
+*)
+
+(* Operation 
+When the HV on signal is active, the gauge will take a little bit of time to
+start an ion current.
+*)
+stGauge.tonIC.IN	:=	stGauge.i_xHvOn;	
+stGauge.tonIC();
+
+IF stGauge.tonIC.Q AND q_xGaugeConnected THEN
+	stGauge.rPress := stVolume.rPressure;
+	stGauge.q_iRawPress := F_MKS_903_LOG(stGauge);// gauge on
+ELSIF stGauge.i_xHvOn AND q_xGaugeConnected THEN
+	stGauge.rPress := 0;
+	stGauge.q_iRawPress := F_MKS_903_LOG(1E-11); // gauge on, waiting for spark??
+ELSE
+	stGauge.rPress := 0
+	stGauge.q_iRawPress := F_MKS_903_LOG(1E-4); // gauge not on??
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_MKS_903">
+      <LineId Id="14" Count="11" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="37" Count="1" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="39" Count="1" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
