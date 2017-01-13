@@ -1,11 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
   <POU Name="F_MKS_275" Id="{2be950ad-0328-42e4-8184-d4975685db86}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION F_MKS_275 : INT
 VAR_INPUT
-	stVolume	:	ST_Volume;
 	stGauge	:	ST_MKS_275;
-	q_xGaugeConnected	:	BOOL;
 END_VAR
 VAR CONSTANT
 	caPvsV	:	ARRAY[1..30,1..2] OF REAL := [
@@ -48,23 +46,43 @@ END_VAR
 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[
+      <ST><![CDATA[(*
+MKS 275 voltage calculation 
 
-(* Run the interpolator to get a new value for the analog voltage *)
-stGauge.stIntrpParams.nDataTable_NumberOfRows := 30;
-stGauge.stIntrpParams.pDataTable_ADR	:=	ADR(caPvsV); //we point each time this block gets called to avoid online changes shifting memory around and potentially screwing up this pointer.
-stGauge.stIntrpParams.nDataTable_SIZEOF	:=	SIZEOF(caPvsV);
+Does the inverse of the FB 907 from the vacuum library.
+Converts real pressure into MKS 275 signal based on interpolation.
 
-stGauge.fbInterpolator.fIn	:=	stVolume.rPressure;
-stGauge.fbInterpolator.stParams := stGauge.stIntrpParams;
-stGauge.fbInterpolator.fOut	:=	rVoltage;
-stGauge.fbInterpolator();
+A. Pai, 2017-1-13
+*)
+IF stGauge.rPress <> 0 THEN
 
-IF q_xGaugeConnected THEN
+	(* Run the interpolator to get a new value for the analog voltage *)
+	stGauge.stIntrpParams.nDataTable_NumberOfRows := 30;
+	stGauge.stIntrpParams.pDataTable_ADR	:=	ADR(caPvsV); //we point each time this block gets called to avoid online changes shifting memory around and potentially screwing up this pointer.
+	stGauge.stIntrpParams.nDataTable_SIZEOF	:=	SIZEOF(caPvsV);
+	stGauge.fbInterpolator.fIn	:=	stGauge.rPress;
+	stGauge.fbInterpolator(stParams := stGauge.stIntrpParams, fOut => rVoltage);
+	(*Set signal based on voltage*)
 	F_MKS_275	:= REAL_TO_INT( rVoltage * 32767/10 );
+	
 ELSE
-	F_MKS_275	:= 0;
+	F_MKS_275 := 0;
 END_IF]]></ST>
     </Implementation>
+    <LineIds Name="F_MKS_275">
+      <LineId Id="73" Count="2" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="76" Count="2" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="66" Count="1" />
+      <LineId Id="5" Count="2" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="12" Count="1" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="68" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>
