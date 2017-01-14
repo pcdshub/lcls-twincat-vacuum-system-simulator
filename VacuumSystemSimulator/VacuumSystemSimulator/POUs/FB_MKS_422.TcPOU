@@ -36,15 +36,26 @@ stGauge.tonIC();
 
 (* Pressure *)
 IF stGauge.tonIC.Q THEN
-	stGauge.q_iRawPress := F_MKS_937_LOG(stGauge.rPress);
+	(*set gauge real pressure based on chamber real pressure*)
+	stGauge.rPress := stVolume.rPressure;
+	(*set gauge raw pressure based on transformation of real pressure*)
+	stGauge.q_iRawPress := F_MKS_937(stGauge.rPress);
 ELSIF stGauge.i_xHvOn THEN
-	stGauge.q_iRawPress := F_MKS_937_LOG(1E-11); // gauge on, waiting for spark
+	stGauge.rPress := 0;
+	stGauge.q_iRawPress := 0; // gauge on, waiting for spark
 ELSE
-	stGauge.q_iRawPress := F_MKS_937_LOG(1E-4); // gauge not on
+	stGauge.rPress := 0;
+	stGauge.q_iRawPress := 0; // gauge not on
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="FB_MKS_422">
-      <LineId Id="3" Count="23" />
+      <LineId Id="3" Count="17" />
+      <LineId Id="41" Count="2" />
+      <LineId Id="21" Count="1" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="25" Count="1" />
       <LineId Id="2" Count="0" />
     </LineIds>
   </POU>
