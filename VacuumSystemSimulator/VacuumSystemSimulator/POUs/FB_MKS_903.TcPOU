@@ -38,7 +38,7 @@ ELSIF stGauge.i_xHvOn AND q_xGaugeConnected THEN
 	stGauge.rPress := 0;
 	stGauge.q_iRawPress := M_MKS_903(1E-11); // gauge on, waiting for spark??
 ELSE
-	stGauge.rPress := 0
+	stGauge.rPress := 0;
 	stGauge.q_iRawPress := M_MKS_903(1E-4); // gauge not on??
 END_IF]]></ST>
     </Implementation>

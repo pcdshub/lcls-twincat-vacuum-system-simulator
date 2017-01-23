@@ -4,6 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_MKS_500
 VAR_INPUT
 	stVolume : ST_Volume;
+	q_xGaugeConnected	:	BOOL;
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -22,7 +23,6 @@ MKS 500 Vacuum gauge
 A vacuum gauge takes as input, the pressure of the volume it is attached to,
 and produces on its analog output, a corresponding voltage.
 
-
 *)
 
 (* Operation 
@@ -32,13 +32,20 @@ start an ion current.
 stGauge.tonIC.IN	:=	stGauge.i_xHvOn;	
 stGauge.tonIC();
 
-
-(* Pressure *)
-stGauge.q_iRawPress := M_MKS_500(
+IF stGauge.tonIC.Q AND q_xGaugeConnected THEN
+	stGauge.rPress := stVolume.rPressure;
+	stGauge.q_iRawPress := M_MKS_500(
 	i_rPress := stVolume.rPressure,
 	i_xHVOn	:=	stGauge.i_xHvOn,
 	i_xICOn	:=	stGauge.tonIC.Q
-);]]></ST>
+	);// gauge on
+ELSIF stGauge.i_xHvOn AND q_xGaugeConnected THEN
+	stGauge.rPress := 0;
+	stGauge.q_iRawPress := 0; // gauge on, waiting for spark??
+ELSE
+	stGauge.rPress := 0;
+	stGauge.q_iRawPress := 0; // gauge not on??
+END_IF]]></ST>
     </Implementation>
     <Method Name="M_MKS_500" Id="{e4d1ada1-039b-4407-94d8-b7f8c987d67a}">
       <Declaration><![CDATA[METHOD PRIVATE M_MKS_500 : INT
@@ -78,7 +85,11 @@ M_MKS_500 := REAL_TO_INT( rVoltage * 32767/10 );]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_MKS_500">
-      <LineId Id="3" Count="21" />
+      <LineId Id="3" Count="4" />
+      <LineId Id="9" Count="7" />
+      <LineId Id="38" Count="3" />
+      <LineId Id="50" Count="3" />
+      <LineId Id="42" Count="6" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_MKS_500.M_MKS_500">
