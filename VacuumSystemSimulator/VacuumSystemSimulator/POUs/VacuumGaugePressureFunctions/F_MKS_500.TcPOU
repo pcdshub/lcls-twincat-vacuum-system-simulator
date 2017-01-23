@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
   <POU Name="F_MKS_500" Id="{ae6484ed-7a3a-42a3-b4a9-776f66ce63ef}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION F_MKS_500 : INT
 VAR_INPUT
@@ -34,7 +34,11 @@ ELSE
 	rVoltage := vNoHV;
 END_IF
 
-F_MKS500 := REAL_TO_INT( rVoltage * 32767/10 );]]></ST>
+F_MKS_500 := REAL_TO_INT( rVoltage * 32767/10 );]]></ST>
     </Implementation>
+    <LineIds Name="F_MKS_500">
+      <LineId Id="3" Count="14" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

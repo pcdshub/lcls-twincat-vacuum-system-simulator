@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
   <POU Name="FB_MKS_500" Id="{6ae295b2-a14b-43e3-81a8-5d076111b156}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_MKS_500
 VAR_INPUT
@@ -34,11 +34,56 @@ stGauge.tonIC();
 
 
 (* Pressure *)
-stGauge.q_iRawPress := stGauge.f_pressure(
+stGauge.q_iRawPress := M_MKS_500(
 	i_rPress := stVolume.rPressure,
 	i_xHVOn	:=	stGauge.i_xHvOn,
 	i_xICOn	:=	stGauge.tonIC.Q
 );]]></ST>
     </Implementation>
+    <Method Name="M_MKS_500" Id="{e4d1ada1-039b-4407-94d8-b7f8c987d67a}">
+      <Declaration><![CDATA[METHOD PRIVATE M_MKS_500 : INT
+VAR_INPUT
+	i_rPress	:	REAL;
+	i_xHVOn	:	BOOL;
+	i_xICOn	:	BOOL;
+END_VAR
+VAR
+	rVoltage	:	REAL;
+END_VAR
+VAR CONSTANT
+	vBase	:	REAL := 1; //corresponding vbase 1V actually?
+	pBase	:	REAL := 1.0E-9; //i think the pbase might be 1E-9 for the default curve...
+	vSlope	:	REAL := 1.0; //looks correct for default curve
+	vNoIC	:	REAL := 0.6;
+	vNoHV	:	REAL := 0.1;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(*
+MKS 500 voltage calculation
+
+Does the inverse of the FB 500 from the vacuum library.
+
+A. Wallace, 2016-2-22
+*)
+IF i_xHVOn and i_xICOn THEN
+	rVoltage := (vBase + vSlope * LOG(i_rPress/pBase));
+ELSIF i_xHVOn AND NOT i_xICOn THEN
+	rVoltage := vNoIC;
+ELSE
+	rVoltage := vNoHV;
+END_IF
+
+M_MKS_500 := REAL_TO_INT( rVoltage * 32767/10 );]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_MKS_500">
+      <LineId Id="3" Count="21" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MKS_500.M_MKS_500">
+      <LineId Id="36" Count="14" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

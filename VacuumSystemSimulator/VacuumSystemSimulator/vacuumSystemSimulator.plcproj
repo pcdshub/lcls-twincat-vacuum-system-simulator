@@ -126,14 +126,20 @@
       <SubType>Code</SubType>
       <ObjectProtection>00000000-0000-0000-0000-000000000000</ObjectProtection>
     </Compile>
+    <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\VacuumGaugePressureFunctions\F_MKS_907.TcPOU">
       <SubType>Code</SubType>
+      <ExcludeFromBuild>true</ExcludeFromBuild>
     </Compile>
     <Compile Include="POUs\VacuumGaugePressureFunctions\F_MKS_903.TcPOU">
       <SubType>Code</SubType>
+      <ExcludeFromBuild>true</ExcludeFromBuild>
     </Compile>
     <Compile Include="POUs\VacuumGaugePressureFunctions\F_MKS_925.TcPOU">
       <SubType>Code</SubType>
+      <ExcludeFromBuild>true</ExcludeFromBuild>
     </Compile>
     <Compile Include="POUs\VacuumGaugePressureFunctions\F_MKS_937.TcPOU">
       <SubType>Code</SubType>
@@ -142,13 +148,16 @@
     <Compile Include="POUs\VacuumGaugePressureFunctions\F_MKS_500.TcPOU">
       <SubType>Code</SubType>
       <ObjectProtection>00000000-0000-0000-0000-000000000000</ObjectProtection>
+      <ExcludeFromBuild>true</ExcludeFromBuild>
     </Compile>
     <Compile Include="POUs\VacuumGaugePressureFunctions\F_MKS_275.TcPOU">
       <SubType>Code</SubType>
       <ObjectProtection>00000000-0000-0000-0000-000000000000</ObjectProtection>
+      <ExcludeFromBuild>true</ExcludeFromBuild>
     </Compile>
     <Compile Include="POUs\VacuumGaugePressureFunctions\F_MKS_909.TcPOU">
       <SubType>Code</SubType>
+      <ExcludeFromBuild>true</ExcludeFromBuild>
     </Compile>
     <Compile Include="Version\Global_Version.TcGVL">
       <SubType>Code</SubType>
