@@ -70,7 +70,7 @@ VAR CONSTANT
 		7.60E+02,5.534,
 		8.00E+02,5.558,
 		9.00E+02,5.614,
-		1.00E+03,5.659,
+		1.00E+03,5.659
 	]; //the conversion table for pressure to analog (super) non-linear voltage
 	caPvsVRows	:	UINT	:= 30;
 END_VAR
