@@ -20,6 +20,9 @@
     <ProjectVersion>0.2.0</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DUTs\ST_GAM_PIP.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\ST_MKS_317.TcDUT">
       <SubType>Code</SubType>
       <ObjectProtection>00000000-0000-0000-0000-000000000000</ObjectProtection>
@@ -67,6 +70,9 @@
     <Compile Include="DUTs\ST_MKS_422.TcDUT">
       <SubType>Code</SubType>
       <ObjectProtection>00000000-0000-0000-0000-000000000000</ObjectProtection>
+    </Compile>
+    <Compile Include="DUTs\ST_VAT_77FS.TcDUT">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\ST_Volume.TcDUT">
       <SubType>Code</SubType>

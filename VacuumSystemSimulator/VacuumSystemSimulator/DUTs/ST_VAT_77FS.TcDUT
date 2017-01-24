@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_VAT_77FS" Id="{5d60ddee-2011-45e8-adac-a63831b1d638}">
+    <Declaration><![CDATA[TYPE ST_VAT_77FS :
+STRUCT
+	(*HV sensor 1*)
+	q_xSens1Rdy	:	BOOL;
+	q_xSens1Inrush	:	BOOL;
+	i_xSens1SensorOff:	BOOL;
+	
+	(*HV sensor 2*)
+	q_xSens2Rdy	:	BOOL;
+	q_xSens2Inrush	:	BOOL;
+	i_xSens2SensorOff:	BOOL;
+	
+	(*Control Module*)
+	q_xSysRdy	:	BOOL;
+	q_xClsExternal	:	BOOL;
+	i_xSysReset	:	BOOL;
+	
+	(*Gate Module*)
+	q_xGate1Open:	BOOL;
+	q_xGate1Close	:	BOOL;
+	q_xGate1Rdy	:	BOOL;
+	
+	q_xGate2Open:	BOOL;
+	q_xGate2Close	:	BOOL;
+	q_xGate2Rdy	:	BOOL;
+	
+	i_xGate1Open:	BOOL;
+	i_xGate1Close	:	BOOL;
+	i_xGate2Open:	BOOL;
+	i_xGate2Close	:	BOOL;
+	
+	(*FAST Shutter Valve Module*)
+	q_xFast1Rdy	:	BOOL;
+	q_xFast1Inrush	:	BOOL;
+	i_xFast1SensorOff:	BOOL;
+	
+	i_xFast1Open:	BOOL;
+	i_xFast1Close	:	BOOL;
+
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
