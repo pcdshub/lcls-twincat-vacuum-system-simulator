@@ -81,7 +81,7 @@ END_VAR]]></Declaration>
         <ST><![CDATA[(*
 MKS 275 voltage calculation 
 
-Does the inverse of the FB 907 from the vacuum library.
+Does the inverse of the FB 275 from the vacuum library.
 Converts real pressure into MKS 275 signal based on interpolation.
 
 A. Pai, 2017-1-13

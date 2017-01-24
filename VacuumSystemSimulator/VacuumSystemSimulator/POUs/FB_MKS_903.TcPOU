@@ -12,6 +12,8 @@ VAR_IN_OUT
 	stGauge	:	ST_MKS_903;
 END_VAR
 VAR
+	dummy_WaitingForSpark : 	ST_MKS_903 := (rPress := 1E-11);
+	dummy_Off		      : 	ST_MKS_903 := (rPress := 1E-4);
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -36,10 +38,10 @@ IF stGauge.tonIC.Q AND q_xGaugeConnected THEN
 	stGauge.q_iRawPress := M_MKS_903(stGauge);// gauge on
 ELSIF stGauge.i_xHvOn AND q_xGaugeConnected THEN
 	stGauge.rPress := 0;
-	stGauge.q_iRawPress := M_MKS_903(1E-11); // gauge on, waiting for spark??
+	stGauge.q_iRawPress := M_MKS_903(dummy_WaitingForSpark); // gauge on, waiting for spark??
 ELSE
 	stGauge.rPress := 0;
-	stGauge.q_iRawPress := M_MKS_903(1E-4); // gauge not on??
+	stGauge.q_iRawPress := M_MKS_903(dummy_Off); // gauge not on??
 END_IF]]></ST>
     </Implementation>
     <Method Name="M_MKS_903" Id="{6da8ed67-5774-41ff-987a-e6754f6ebe1c}">
@@ -50,7 +52,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[(*
-MKS 907 voltage calculation 
+MKS 903 voltage calculation 
 
 Does the inverse of the FB 903 from the vacuum library
 
