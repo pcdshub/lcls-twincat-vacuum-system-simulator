@@ -32,10 +32,15 @@ Mass_final/Volume = (Mass_initial/Volume) -  (Pressure*volume/seconds) * seconds
 
 Pressure_final = Pressure _ inital - IonMassFlowRate * seconds/Volume of chamber
 *)
+
+IF stPip.xOn THEN
+
 Pa := stVolume.rPressure;
 Va := stVolume.rVolume;
 
-stVolume.rPressure := Pa - IonMassRate*tSec/Va;]]></ST>
+stVolume.rPressure := Pa - IonMassRate*tSec/Va;
+
+END_IF]]></ST>
     </Implementation>
     <LineIds Name="FB_GAM_PIP">
       <LineId Id="21" Count="1" />
@@ -48,8 +53,12 @@ stVolume.rPressure := Pa - IonMassRate*tSec/Va;]]></ST>
       <LineId Id="37" Count="0" />
       <LineId Id="25" Count="0" />
       <LineId Id="20" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="39" Count="0" />
       <LineId Id="17" Count="0" />
       <LineId Id="15" Count="1" />
+      <LineId Id="42" Count="1" />
       <LineId Id="9" Count="0" />
     </LineIds>
   </POU>
