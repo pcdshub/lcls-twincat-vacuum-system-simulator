@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="FB_GAM_PIP" Id="{d08849ec-7e58-4f67-a60a-8aba2834a94e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_GAM_PIP
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR_IN_OUT
+	stVolume : ST_Volume;
+	stPip	:	ST_GAM_PIP;
+END_VAR
+VAR
+	Pa 	: REAL;
+	Va	: REAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* Ion Pump Simulation
+A. Pai 2017-1-27
+
+The Ion Pump turns gas molecules into solid by using electroplating.
+
+Therefore the Ion Pump takes gas molecules out of the system. 
+We can treat that as if a small portion of gas mass is disappearing.
+
+Equation:
+Assume
+Mass = Pressure*volume (Torr * Liters)
+
+Mass_final/Volume = (Mass_initial/Volume) -  (Pressure*volume/seconds) * seconds/ Volume (should we change to ionConductance?)
+
+Pressure_final = Pressure _ inital - IonMassFlowRate * seconds/Volume of chamber
+*)
+Pa := stVolume.rPressure;
+Va := stVolume.rVolume;
+
+stVolume.rPressure := Pa - IonMassRate*tSec/Va;]]></ST>
+    </Implementation>
+    <LineIds Name="FB_GAM_PIP">
+      <LineId Id="21" Count="1" />
+      <LineId Id="26" Count="3" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="34" Count="2" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="15" Count="1" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

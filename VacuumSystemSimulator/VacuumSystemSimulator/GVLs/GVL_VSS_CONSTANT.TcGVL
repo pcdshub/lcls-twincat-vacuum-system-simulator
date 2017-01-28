@@ -4,6 +4,7 @@
     <Declaration><![CDATA[VAR_GLOBAL CONSTANT
 	ATM	:	REAL := 760; // Atmospheric pressure in Torr
 	tSec : INT := 1; // time in seconds
+	IonMassRate : REAL := 0.00001; // Torr*Liter/seconds
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
