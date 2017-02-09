@@ -135,6 +135,9 @@
       <SubType>Code</SubType>
       <ObjectProtection>00000000-0000-0000-0000-000000000000</ObjectProtection>
     </Compile>
+    <Compile Include="POUs\MKS_275_to_500_HvOn.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\VacuumGaugePressureFunctions\F_MKS_907.TcPOU">
       <SubType>Code</SubType>
       <ExcludeFromBuild>true</ExcludeFromBuild>
