@@ -55,7 +55,7 @@ Pump load is also increased by having a high foreline pressure. If the inlet pre
 pressure can be quite high, without affecting the pump too badly.
 *)
 stPump.rLoad := LIMIT( 0, (INT_TO_REAL(stPump.q_iSpeed) / INT_TO_REAL(stPump.iMaxSpd)) + 
-					(stVlInlet.rPressure/750) - rLoadFactor, 1);
+					(stVlInlet.rPressure/ATM) - rLoadFactor, 1);
 stPump.tonOvrLd.IN := stPump.rLoad >= stPump.rMaxLoad;
 stPump.tonOvrLd.PT := OverloadTime;
 stPump.tonOvrLd();
