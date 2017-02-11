@@ -14,10 +14,11 @@
     <Implicit_Jitter_Distribution>{530f634b-7d4a-432c-9ca7-ec823238465c}</Implicit_Jitter_Distribution>
     <LibraryReferences>{085d33fc-b832-4966-a851-087f4dd8bf64}</LibraryReferences>
     <Title>Vacuum System Simulator Library</Title>
-    <Released>True</Released>
+    <Released>true</Released>
     <Description>Library of functions used for simulation of vacuum systems.</Description>
     <Company>SLAC</Company>
-    <ProjectVersion>0.2.0</ProjectVersion>
+    <ProjectVersion>0.2.1</ProjectVersion>
+    <CombineIds>false</CombineIds>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\ST_GAM_PIP.TcDUT">
