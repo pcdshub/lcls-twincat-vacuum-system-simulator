@@ -42,6 +42,9 @@ stPump.tonSpd.PT := RunUpTime;
 stPump.tonSpd(Q=>stPump.q_xAtSpd);
 stPump.q_iSpeed := REAL_TO_INT(LIMIT(0,TIME_TO_REAL(stPump.tonSpd.ET)/TIME_TO_REAL(RunUpTime),1) * INT_TO_REAL(stPump.iMaxSpd) );
 
+(* Start signal loopback *)
+stPump.q_xStart := stPump.i_xRun;
+
 (* Pump load *)
 (*
 We claim that pump load is a function of speed and pressure.
