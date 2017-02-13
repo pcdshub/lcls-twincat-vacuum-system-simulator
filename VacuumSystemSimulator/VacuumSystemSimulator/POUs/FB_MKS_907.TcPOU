@@ -101,7 +101,7 @@ VAR CONSTANT
 	caPvsVRows	:	UINT	:= 55;
 END_VAR
 VAR
-	rVoltage	:	REAL;
+	rVoltage	:	LREAL;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -123,7 +123,7 @@ IF stGauge.rPress <> 0 THEN
 	stGauge.fbInterpolator(stParams := stGauge.stIntrpParams, fOut => rVoltage);
 
 	(*Calculate signal based on voltage*)
-	M_MKS_907	:= REAL_TO_INT( rVoltage * 32767/10 );
+	M_MKS_907	:= LREAL_TO_INT( rVoltage * 32767/10 );
 
 ELSE
 	M_MKS_907 :=0;
