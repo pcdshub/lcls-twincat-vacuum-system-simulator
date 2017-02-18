@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
-  <POU Name="FB_VacuumValve" Id="{d63e444c-fdb6-4b5b-aa83-cba54cfcf909}" SpecialFunc="None">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="FB_VacuumValve" Id="{2e26d57b-cfa8-4953-9619-5535d3a3ce01}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_VacuumValve
 VAR_INPUT
-	ValveTime : TIME := T#500ms;
+	ValveTime : TIME := T#500MS;
+	ETime : TIME := T#0MS;
+	CalcTime : TIME := T#500MS;
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -13,8 +15,14 @@ VAR_IN_OUT
 	stValve : ST_VacuumValve;
 END_VAR
 VAR
-	ClsTON:TON;
+	ClsTOF:TOF;
 	OpnTON:TON;
+	ClsInverter : BOOL;
+	r_t : R_TRIG;
+	f_t : F_TRIG;
+	State : INT;
+	//calculates prevous times to send correct PT
+	CalcOpenTime : TIME := T#0MS;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -32,7 +40,7 @@ Solenoid goes high:
 2. Timer for motion elapses
 3. Actuated switch goes high
 
-2016-2-18 A. Wallace
+2017-2-17 A. Pai
 *)
 
 (* Pressure transfer *)
@@ -43,13 +51,105 @@ END_IF
 
 (* Valve motion *)
 OpnTON.IN := stValve.i_xSol;
-OpnTON.PT := ValveTime - ClsTON.ET;
+r_t(CLK := stValve.i_xSol); 
+
+ClsTOF.IN := stValve.i_xSol;
+f_t(CLK := stValve.i_xSol);
+
+//If there is a rising edge then change OpnTON.PT
+IF(r_t.Q)THEN
+	IF State = 0 THEN
+	CalcOpenTime := ValveTime;
+	END_IF
+	// if previous state = 2
+	IF State = 2 THEN
+		CalcOpenTime := CalcOpenTime + ClsTOF.ET;
+	END_IF
+	OpnTON.PT := CalcOpenTime;
+	//set state = 1 for rising edge case
+	State := 1;
+END_IF
+
+//If there is a falling edge then change ClsTOF.PT
+IF(f_t.Q) THEN
+	IF State = 0 THEN
+	CalcOpenTime := T#0MS;
+	END_IF
+	// if previous state = 1
+	IF State = 1 THEN
+		CalcOpenTime := OpnTON.ET - CalcOpenTime ;
+		//ClsTOF.PT := ValveTime - CalcOpenTime;
+	END_IF
+	ClsTOF.PT := ValveTime - CalcOpenTime;
+	//set state = 2 for falling edge case
+	State := 2;
+END_IF
+
+//run both TON and TOF timers 
 OpnTON(Q=>stValve.q_xOpnLS);
+ClsTOF(Q=>ClsInverter);
+
+//Invert signal to correct value
+stValve.q_xClsLS := NOT ClsInverter;
+
+//If open and close values stablized then set ETime to 0ms
+IF(stValve.q_xOpnLS XOR stValve.q_xClsLS) THEN
+	// reset CalcOpenTime
+	//CalcOpenTime := T#0MS;
+	// stable state
+	State := 0;
+END_IF
 
 
-ClsTON.IN := NOT stValve.i_xSol;
-ClsTON.PT := ValveTime - OpnTON.ET;
-ClsTON(Q=>stValve.q_xClsLS);]]></ST>
+]]></ST>
     </Implementation>
+    <LineIds Name="FB_VacuumValve">
+      <LineId Id="3" Count="23" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="153" Count="3" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="161" Count="0" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="148" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="151" Count="0" />
+      <LineId Id="138" Count="0" />
+      <LineId Id="137" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="132" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="163" Count="1" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="147" Count="0" />
+      <LineId Id="142" Count="1" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="144" Count="1" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="134" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="81" Count="1" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="125" Count="0" />
+      <LineId Id="130" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

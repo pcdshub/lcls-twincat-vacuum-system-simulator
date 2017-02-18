@@ -131,9 +131,12 @@
     <Compile Include="POUs\FB_PfeifferTurboPump.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_VacuumValve.TcPOU">
+    <Compile Include="POUs\FB_VacuumValve_old.TcPOU">
       <SubType>Code</SubType>
       <ObjectProtection>00000000-0000-0000-0000-000000000000</ObjectProtection>
+    </Compile>
+    <Compile Include="POUs\FB_VacuumValve.TcPOU">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_VirtualLeak.TcPOU">
       <SubType>Code</SubType>

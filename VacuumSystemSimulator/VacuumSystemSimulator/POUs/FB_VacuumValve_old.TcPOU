@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="FB_VacuumValve_old" Id="{d63e444c-fdb6-4b5b-aa83-cba54cfcf909}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_VacuumValve_old
+VAR_INPUT
+	ValveTime : TIME := T#500ms;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR_IN_OUT
+	stAVol : ST_Volume;
+	stBVol : ST_Volume;
+	stValve : ST_VacuumValve;
+END_VAR
+VAR
+	ClsTON:TON;
+	OpnTON:TON;
+	MovTON:TON;
+	ftSol:F_TRIG;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* 
+Vacuum Valve Simulation
+
+A valve has two ports, A and B.
+And two states, open or closed. (transition = open)
+Valve open:
+Average of A and B is written to both sides.
+
+Limit switches
+Solenoid goes high:
+1. Normal switch goes low
+2. Timer for motion elapses
+3. Actuated switch goes high
+
+2016-2-18 A. Wallace
+*)
+
+(* Pressure transfer *)
+IF NOT stValve.q_xClsLS THEN
+	stBVol.rPressure := (stAVol.rPressure*stAVol.rVolume + stBVol.rPressure*stBVol.rVolume)/(stAVol.rVolume+stBVol.rVolume);
+	stAVol.rPressure := stBVol.rPressure;
+END_IF
+
+(* Valve motion *)
+ftSol(CLK:=stValve.i_xSol);
+
+OpnTON.IN := stValve.i_xSol;
+IF ClsTON.Q THEN
+	OpnTON.PT := ValveTime;
+ELSE
+	OpnTON.PT := ValveTime - ClsTON.ET;
+END_IF
+OpnTON(Q=>stValve.q_xOpnLS);
+
+ClsTON.IN := NOT stValve.i_xSol;
+IF ftSol.Q  THEN
+	ClsTON.PT := ValveTime;
+ELSE
+	ClsTON.PT := ValveTime - OpnTON.ET;
+END_IF
+ClsTON(Q=>stValve.q_xClsLS);
+IF NOT stValve.i_xSol
+//Time left to close
+MovTON.ET := 
+MovTON();
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_VacuumValve_old">
+      <LineId Id="3" Count="23" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="49" Count="1" />
+      <LineId Id="52" Count="1" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="54" Count="1" />
+      <LineId Id="57" Count="1" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="66" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
