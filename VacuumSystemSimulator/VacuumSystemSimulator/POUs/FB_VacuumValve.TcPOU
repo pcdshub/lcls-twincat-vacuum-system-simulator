@@ -77,7 +77,7 @@ IF(f_t.Q) THEN
 	END_IF
 	// if previous state = 1
 	IF State = 1 THEN
-		CalcOpenTime := OpnTON.ET - CalcOpenTime ;
+		CalcOpenTime := CalcOpenTime - OpnTON.ET   ;
 		//ClsTOF.PT := ValveTime - CalcOpenTime;
 	END_IF
 	ClsTOF.PT := ValveTime - CalcOpenTime;
