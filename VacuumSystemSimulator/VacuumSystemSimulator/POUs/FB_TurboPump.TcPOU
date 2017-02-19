@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
   <POU Name="FB_TurboPump" Id="{d3522d41-e3aa-48c2-8bb3-29501d4aeb56}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_TurboPump
 VAR_INPUT
@@ -24,7 +24,15 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[(*
+      <ST><![CDATA[THIS^.PumpLogic();]]></ST>
+    </Implementation>
+    <Method Name="PumpLogic" Id="{5265bccf-087a-4ce1-9020-c355b5ecfbc5}">
+      <Declaration><![CDATA[METHOD PumpLogic : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(*
 Pfeiffer Turbo Pump
 
 A turbo pump reduces the pressure of a volume at a certain rate, mass-removal-rate(pressure,speed,tc).
@@ -113,6 +121,14 @@ ELSE //treat the pump like an open valve
 							(stVlInlet.rVolume+stVlOutlet.rVolume);
 	stVlInlet.rPressure := stVlOutlet.rPressure; 
 END_IF]]></ST>
-    </Implementation>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_TurboPump">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TurboPump.PumpLogic">
+      <LineId Id="6" Count="87" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

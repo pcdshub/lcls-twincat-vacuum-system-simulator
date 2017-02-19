@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
   <POU Name="FB_PfeifferTurboPump" Id="{8a094e05-8b3e-4241-abfb-693b3ec2b80c}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_PfeifferTurboPump EXTENDS FB_TurboPump
 VAR_INPUT
@@ -10,7 +10,10 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[SUPER^.PumpLogic();]]></ST>
     </Implementation>
+    <LineIds Name="FB_PfeifferTurboPump">
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>
