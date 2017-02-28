@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="FB_TurboPump_Demo" Id="{7dac1960-c0e6-4d03-89e6-953dd6b7aea6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_TurboPump_Demo
+VAR_INPUT
+	RunUpTime	:	TIME := T#30S; //How long it should take for the pump to reach full speed
+	OverloadTime	:	TIME := T#1S; //How long a pump will take to overload
+	OverTempTime	:	TIME := T#30s; //How long a pump takes to heat up
+END_VAR
+VAR_IN_OUT
+	stVlInlet : ST_Volume;
+	stVlOutlet	:	ST_Volume;
+	stPump	:	ST_MechPump;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	rLoadFactor : REAL := 0.8; //
+	xOverloaded	:	BOOL;
+	rMaxMRR : REAL := 0.8; //arbitrary for now
+	xPump	:	BOOL;
+	rInletPressDelta: REAL; //Inlet pressure change in one cycle
+	rMassTrans: REAL; //Mass transfered through the pump in one cycle
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+Pfeiffer Turbo Pump
+
+A turbo pump reduces the pressure of a volume at a certain rate, mass-removal-rate(pressure,speed,tc).
+The pump does this by removing mass from the inlet volume, and transferring it to the outlet volume.
+This value is linear for now, but can be calculated from a non-linear expression later...
+It has a limit to how much power it can consume before causing an error.
+Other limits can be programmed later, perhaps something to simulate cooling issues...
+
+When a turbo is not spinning, it is simply a low-conductance tube. For now, we are ignoring
+conductance, so we'll go ahead and say, if a turbo is not spinning, it is like an open valve...
+*)
+(* Pump speed *)
+stPump.tonSpd.IN := TRUE;
+stPump.tonSpd.PT := RunUpTime; 
+stPump.tonSpd(Q=>stPump.q_xAtSpd);
+stPump.q_iSpeed := REAL_TO_INT(LIMIT(0,TIME_TO_REAL(stPump.tonSpd.ET)/TIME_TO_REAL(RunUpTime),1) * INT_TO_REAL(stPump.iMaxSpd) );
+
+(* Start signal loopback *)
+stPump.q_xStart := stPump.i_xRun;
+
+
+(* Mass Removal Rate *)
+(*
+MRR is scaled by the current speed/ max speed. This might not be the best assumption, but it's all we got for now.
+*)
+stPump.rMRE := INT_TO_REAL( stPump.q_iSpeed ) /INT_TO_REAL(stPump.iMaxSpd) * rMaxMRR;
+
+
+(* Pumping *)
+
+	rInletPressDelta := stVlInlet.rPressure; //the current pressure so we can find the delta further down
+	// mre should become a function of inlet and outlet pressure.
+	stVlInlet.rPressure := MAX( stPump.rBasePress, 
+							stVlInlet.rPressure * (1 - stPump.rMRE/stVlInlet.rVolume) );
+	rInletPressDelta := rInletPressDelta - stVlInlet.rPressure;
+	// The total mass that was transfered through the pump
+	rMassTrans	:= rInletPressDelta*stVlInlet.rVolume;
+	// The outlet of the pump should be seeing whatever was removed from the inlet.
+	stVlOutlet.rPressure := (rMassTrans + stVlOutlet.rPressure*stVlOutlet.rVolume)/
+							(stVlOutlet.rVolume); //note, only use the outlet volume because the pump is running
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_TurboPump_Demo">
+      <LineId Id="30" Count="11" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="43" Count="6" />
+      <LineId Id="80" Count="7" />
+      <LineId Id="101" Count="12" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

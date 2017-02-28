@@ -78,9 +78,6 @@
 				<Instance Id="#x01010010" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
 					<Name>VacuumSystemSimulator Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
-					<TaskPouOids>
-						<TaskPouOid Prio="20" OTCID="#x01010011"/>
-					</TaskPouOids>
 				</Instance>
 			</Project>
 		</Plc>
