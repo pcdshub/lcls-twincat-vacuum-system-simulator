@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="FB_VacuumValve_Vent" Id="{4d6e6c20-2eb5-4216-b9b3-30aec822cb71}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_VacuumValve_Vent
+VAR_INPUT
+	ValveTime : TIME := T#500MS;
+	ETime : TIME := T#0MS;
+	CalcTime : TIME := T#500MS;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR_IN_OUT
+	stAVol : ST_Volume;
+	stBVol : ST_Volume;
+	stValve : ST_VacuumValve;
+END_VAR
+VAR
+	OpnTOF:TOF;
+	ClsTON:TON;
+	OpnInverter : BOOL;
+	r_t : R_TRIG;
+	f_t : F_TRIG;
+	State : INT;
+	//calculates prevous times to send correct PT
+	CalcOpenTime : TIME := T#0MS;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* 
+Vacuum Vent Valve Simulation
+
+A valve has two ports, A and B.
+And 3 states:Stable(either open or closed), 1st solenoid trigger, 
+consecutive solenoid triggers open or closed. 
+Valve default is open:
+Average of A and B is written to both sides.
+
+Limit switches
+When Solenoid goes high vent is closed:
+1. Normal switch goes low
+2. Timer for motion elapses
+3. Actuated switch goes high
+
+2017-2-17 A. Pai
+*)
+
+(* Pressure transfer *)
+IF stValve.q_xClsLS THEN
+	stBVol.rPressure := (stAVol.rPressure*stAVol.rVolume + stBVol.rPressure*stBVol.rVolume)/(stAVol.rVolume+stBVol.rVolume);
+	stAVol.rPressure := stBVol.rPressure;
+END_IF
+
+(* Valve motion *)
+ClsTON.IN := stValve.i_xSol;
+r_t(CLK := stValve.i_xSol); 
+
+OpnTOF.IN := stValve.i_xSol;
+f_t(CLK := stValve.i_xSol);
+
+//If there is a rising edge then change ClsTON.PT to close valve
+IF(r_t.Q)THEN
+	IF State = 0 THEN
+	CalcOpenTime := ValveTime;
+	END_IF
+	// if previous state = 2
+	IF State = 2 THEN
+		CalcOpenTime := CalcOpenTime + OpnTOF.ET;
+	END_IF
+	ClsTON.PT := CalcOpenTime;
+	//set state = 1 for rising edge case
+	State := 1;
+END_IF
+
+//If there is a falling edge then change OpnTOF.PT to open valve
+IF(f_t.Q) THEN
+	IF State = 0 THEN
+	CalcOpenTime := T#0MS;
+	END_IF
+	// if previous state = 1
+	IF State = 1 THEN
+		CalcOpenTime := CalcOpenTime - ClsTON.ET   ;
+		//OpnTOF.PT := ValveTime - CalcOpenTime;
+	END_IF
+	OpnTOF.PT := ValveTime - CalcOpenTime;
+	//set state = 2 for falling edge case
+	State := 2;
+END_IF
+
+//run both TON and TOF timers 
+ClsTON(Q=>stValve.q_xClsLS);
+OpnTOF(Q=>OpnInverter);
+
+//Invert signal to correct value
+stValve.q_xOpnLS := NOT OpnInverter;
+
+//If open and close values stablized then set ETime to 0ms
+IF(stValve.q_xOpnLS XOR stValve.q_xClsLS) THEN
+	// reset CalcOpenTime
+	//CalcOpenTime := T#0MS;
+	// stable state
+	State := 0;
+END_IF
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_VacuumValve_Vent">
+      <LineId Id="10" Count="3" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="14" Count="70" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

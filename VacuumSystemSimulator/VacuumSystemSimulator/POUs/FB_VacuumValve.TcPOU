@@ -56,7 +56,7 @@ r_t(CLK := stValve.i_xSol);
 ClsTOF.IN := stValve.i_xSol;
 f_t(CLK := stValve.i_xSol);
 
-//If there is a rising edge then change OpnTON.PT
+//If there is a rising edge then change OpnTON.PT to open valve
 IF(r_t.Q)THEN
 	IF State = 0 THEN
 	CalcOpenTime := ValveTime;
@@ -70,7 +70,7 @@ IF(r_t.Q)THEN
 	State := 1;
 END_IF
 
-//If there is a falling edge then change ClsTOF.PT
+//If there is a falling edge then change ClsTOF.PT to close valve
 IF(f_t.Q) THEN
 	IF State = 0 THEN
 	CalcOpenTime := T#0MS;
