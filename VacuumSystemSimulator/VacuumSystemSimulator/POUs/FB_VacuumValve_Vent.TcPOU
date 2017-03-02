@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4019.2">
   <POU Name="FB_VacuumValve_Vent" Id="{4d6e6c20-2eb5-4216-b9b3-30aec822cb71}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_VacuumValve_Vent
 VAR_INPUT
@@ -44,7 +44,7 @@ When Solenoid goes high vent is closed:
 *)
 
 (* Pressure transfer *)
-IF stValve.q_xClsLS THEN
+IF NOT stValve.q_xClsLS THEN
 	stBVol.rPressure := (stAVol.rPressure*stAVol.rVolume + stBVol.rPressure*stBVol.rVolume)/(stAVol.rVolume+stBVol.rVolume);
 	stAVol.rPressure := stBVol.rPressure;
 END_IF
@@ -103,11 +103,5 @@ END_IF
 
 ]]></ST>
     </Implementation>
-    <LineIds Name="FB_VacuumValve_Vent">
-      <LineId Id="10" Count="3" />
-      <LineId Id="106" Count="0" />
-      <LineId Id="14" Count="70" />
-      <LineId Id="9" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
