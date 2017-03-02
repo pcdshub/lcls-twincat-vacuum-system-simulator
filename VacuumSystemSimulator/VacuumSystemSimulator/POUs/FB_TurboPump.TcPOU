@@ -30,6 +30,9 @@ END_VAR
       <Declaration><![CDATA[METHOD PumpLogic : BOOL
 VAR_INPUT
 END_VAR
+VAR
+	local :BOOL;
+END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[(*
@@ -101,7 +104,7 @@ stPump.srError.RESET := stPump.rtResetErr.Q;
 stPump.rtResetErr();/// move up a line
 stPump.srError();
 stPump.q_xErr := stPump.srError.Q1;
-
+local :=stPump.i_xRun AND NOT stPump.q_xErr;
 xPump := stPump.i_xRun AND NOT stPump.q_xErr;
 
 (* Pumping *)

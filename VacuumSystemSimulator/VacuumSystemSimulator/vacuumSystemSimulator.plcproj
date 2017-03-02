@@ -119,6 +119,7 @@
     </Compile>
     <Compile Include="POUs\FB_RoughPump_Demo.TcPOU">
       <SubType>Code</SubType>
+      <ExcludeFromBuild>true</ExcludeFromBuild>
     </Compile>
     <Compile Include="POUs\FB_TurboPump.TcPOU">
       <SubType>Code</SubType>
@@ -130,9 +131,11 @@
     </Compile>
     <Compile Include="POUs\FB_PfeifferTurboPump.TcPOU">
       <SubType>Code</SubType>
+      <ExcludeFromBuild>true</ExcludeFromBuild>
     </Compile>
     <Compile Include="POUs\FB_TurboPump_Demo.TcPOU">
       <SubType>Code</SubType>
+      <ExcludeFromBuild>true</ExcludeFromBuild>
     </Compile>
     <Compile Include="POUs\FB_VacuumValve_old.TcPOU">
       <SubType>Code</SubType>
