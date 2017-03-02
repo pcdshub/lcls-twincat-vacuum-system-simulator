@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4019.2">
   <POU Name="FB_TurboPump" Id="{d3522d41-e3aa-48c2-8bb3-29501d4aeb56}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_TurboPump
 VAR_INPUT
@@ -55,6 +55,9 @@ stPump.q_iSpeed := REAL_TO_INT(LIMIT(0,TIME_TO_REAL(stPump.tonSpd.ET)/TIME_TO_RE
 
 (* Start signal loopback *)
 stPump.q_xStart := stPump.i_xRun;
+IF stPump.q_xAtSpd THEN
+	stPump.q_xStart := FALSE;
+END_IF
 
 (* Pump load *)
 (*
@@ -126,12 +129,5 @@ ELSE //treat the pump like an open valve
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="FB_TurboPump">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_TurboPump.PumpLogic">
-      <LineId Id="6" Count="87" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
