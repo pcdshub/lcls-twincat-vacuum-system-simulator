@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_TwinScrewRoughPump" Id="{1efd2184-3f65-4841-8188-18fc30527ca1}">
+    <Declaration><![CDATA[TYPE ST_TwinScrewRoughPump EXTENDS ST_MechPump :
+STRUCT
+	//Control
+	i_xLowSpd	:	BOOL;
+	i_xReset	:	BOOL;
+	
+	//Readback
+	q_xRun		:	BOOL;
+	q_xStop		:	BOOL;
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
   <DUT Name="ST_MechPump" Id="{b87a021b-d769-41f1-b8d2-403538ace2c3}">
     <Declaration><![CDATA[TYPE ST_MechPump :
 STRUCT
@@ -25,6 +25,7 @@ STRUCT
 	q_xAtSpd	:	BOOL;
 	q_xErr	:	BOOL;
 	q_xStart	:	BOOL;
+	q_xLowSpd	: BOOL;
 	
 	//Other Readbacks
 	q_iPower	:	INT;
