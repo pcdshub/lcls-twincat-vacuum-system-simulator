@@ -4,7 +4,6 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_MKS_903
 VAR_INPUT
 	stVolume : ST_Volume;
-	q_xGaugeConnected	:	BOOL;
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -33,10 +32,10 @@ start an ion current.
 stGauge.tonIC.IN	:=	stGauge.i_xHvOn;	
 stGauge.tonIC();
 
-IF stGauge.tonIC.Q AND q_xGaugeConnected THEN
+IF stGauge.tonIC.Q AND stGauge.q_xGaugeConnected THEN
 	stGauge.rPress := stVolume.rPressure;
 	stGauge.q_iRawPress := M_MKS_903(stGauge);// gauge on
-ELSIF stGauge.i_xHvOn AND q_xGaugeConnected THEN
+ELSIF stGauge.i_xHvOn AND stGauge.q_xGaugeConnected THEN
 	stGauge.rPress := 0;
 	stGauge.q_iRawPress := M_MKS_903(dummy_WaitingForSpark); // gauge on, waiting for spark??
 ELSE
