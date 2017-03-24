@@ -18,7 +18,7 @@
     <Description>Library of functions used for simulation of vacuum systems.</Description>
     <Company>SLAC</Company>
     <CombineIds>false</CombineIds>
-    <ProjectVersion>0.2.7</ProjectVersion>
+    <ProjectVersion>0.2.8</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\ST_GAM_PIP.TcDUT">
