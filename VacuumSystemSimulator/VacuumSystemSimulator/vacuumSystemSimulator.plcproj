@@ -18,9 +18,15 @@
     <Description>Library of functions used for simulation of vacuum systems.</Description>
     <Company>SLAC</Company>
     <CombineIds>false</CombineIds>
-    <ProjectVersion>0.2.9</ProjectVersion>
+    <ProjectVersion>0.0.0</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DUTs\ST_CapManometer.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\ST_CapManometer_CMR362.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\ST_GAM_PIP.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -93,6 +99,12 @@
     <Compile Include="POUs\FB_Aperture.TcPOU">
       <SubType>Code</SubType>
       <ObjectProtection>00000000-0000-0000-0000-000000000000</ObjectProtection>
+    </Compile>
+    <Compile Include="POUs\FB_CapManometer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FB_CapManometer_CMR362.TcPOU">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_GAM_PIP.TcPOU">
       <SubType>Code</SubType>

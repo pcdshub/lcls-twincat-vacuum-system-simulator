@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="FB_CapManometer" Id="{95143725-0557-4421-ab47-0cc189dddcb3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_CapManometer
+VAR_INPUT
+	stVolume : ST_Volume;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR_IN_OUT
+	stGCM	:	ST_CapManometer;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* 
+Capacitance Manometer gauge
+
+A Capacitance Manometer gauge takes as input, the pressure of the volume it is attached to,
+and produces on its analog output, a corresponding voltage.
+
+A. Pai, 2017-3-27
+*)
+
+IF stGCM.q_xGaugeConnected THEN
+	(*set gauge real pressure based on chamber real pressure*)
+	stGCM.rPress := stVolume.rPressure;
+	(*set gauge raw pressure based on transformation of real pressure*)
+	stGCM.q_iRawPress := M_CapManometer(stGCM);// gauge on
+ELSE
+	stGCM.rPress := 0;
+	stGCM.q_iRawPress := 0; // gauge not on ??
+END_IF]]></ST>
+    </Implementation>
+    <Method Name="M_CapManometer" Id="{1f1cafc7-de8e-423e-8db4-e960ae5afb99}">
+      <Declaration><![CDATA[METHOD M_CapManometer : INT
+VAR_INPUT
+	stGCM	: ST_CapManometer;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(*
+Capacitance Manometer voltage calculation 
+
+Does the inverse of the FB_GCM from the vacuum library
+
+A. Pai, 2017-3-27
+*)
+IF stGCM.rPress <> 0 THEN
+	M_CapManometer := REAL_TO_INT(stGCM.rPress * 32767 / stGCM.rFull_Scale );
+ELSE
+	M_CapManometer := 0;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_CapManometer">
+      <LineId Id="21" Count="16" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_CapManometer.M_CapManometer">
+      <LineId Id="6" Count="10" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
