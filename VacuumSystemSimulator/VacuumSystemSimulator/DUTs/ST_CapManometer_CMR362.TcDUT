@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
   <DUT Name="ST_CapManometer_CMR362" Id="{e78f896f-852d-4bf0-a119-0ffe2d298eb2}">
-    <Declaration><![CDATA[TYPE ST_CapManometer_CMR362 EXTENDS ST_CapManometer :
+    <Declaration><![CDATA[TYPE ST_CapManometer_CMR362 EXTENDS ST_VacuumGauge :
 STRUCT
 	rFull_Scale : REAL := 75.0 ;// Torr
 END_STRUCT
