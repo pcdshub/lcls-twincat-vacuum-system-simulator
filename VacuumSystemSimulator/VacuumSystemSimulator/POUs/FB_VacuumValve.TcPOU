@@ -40,6 +40,23 @@ Solenoid goes high:
 2. Timer for motion elapses
 3. Actuated switch goes high
 
+Solenoid values:stValve.i_xSol
+low = close valve
+high = open valve
+
+State Value:
+When state = 0
+	Stable state. either closed or open
+When state = 1
+	in the opening valve state but not fully opened
+When state = 2
+	in the closing valve state but not fully closed
+
+CalcOpentime: 
+	The time it takes to fully open with respect to the location of the
+	valve when the solenoid changes directions, either to close or to open
+	from the stable state or an inbetween state	
+
 2017-2-17 A. Pai
 *)
 
@@ -58,31 +75,49 @@ f_t(CLK := stValve.i_xSol);
 
 //If there is a rising edge then change OpnTON.PT to open valve
 IF(r_t.Q)THEN
+	
 	IF State = 0 THEN
-	CalcOpenTime := ValveTime;
+		
+		CalcOpenTime := ValveTime;
+		
 	END_IF
-	// if previous state = 2
+	
+	// if previous state = 2, then adjust the CalcOpenTime based on ClsTOF's elapsed time
 	IF State = 2 THEN
+		
 		CalcOpenTime := CalcOpenTime + ClsTOF.ET;
+		
 	END_IF
+	
+	//set the Propagation time need to open the valve
 	OpnTON.PT := CalcOpenTime;
 	//set state = 1 for rising edge case
 	State := 1;
+	
 END_IF
 
 //If there is a falling edge then change ClsTOF.PT to close valve
 IF(f_t.Q) THEN
+	//If previous state = 0, then set CalcOpenTime to 0
 	IF State = 0 THEN
-	CalcOpenTime := T#0MS;
+		
+		CalcOpenTime := T#0MS;
+	
 	END_IF
-	// if previous state = 1
+	
+	// if previous state = 1, then adjust the CalcOpenTime based on OpnTON's elapsed time
 	IF State = 1 THEN
-		CalcOpenTime := CalcOpenTime - OpnTON.ET   ;
+		
+		CalcOpenTime := CalcOpenTime - OpnTON.ET;
 		//ClsTOF.PT := ValveTime - CalcOpenTime;
+		
 	END_IF
+	
+	//set the Propagation time need to close the valve
 	ClsTOF.PT := ValveTime - CalcOpenTime;
 	//set state = 2 for falling edge case
 	State := 2;
+	
 END_IF
 
 //run both TON and TOF timers 
@@ -92,45 +127,72 @@ ClsTOF(Q=>ClsInverter);
 //Invert signal to correct value
 stValve.q_xClsLS := NOT ClsInverter;
 
-//If open and close values stablized then set ETime to 0ms
+//If open and close values stablized then reset state to stable state
 IF(stValve.q_xOpnLS XOR stValve.q_xClsLS) THEN
-	// reset CalcOpenTime
-	//CalcOpenTime := T#0MS;
-	// stable state
+	
+	// set state to STABLE state
 	State := 0;
+	
 END_IF
 
 
 ]]></ST>
     </Implementation>
     <LineIds Name="FB_VacuumValve">
-      <LineId Id="3" Count="23" />
+      <LineId Id="3" Count="11" />
+      <LineId Id="222" Count="3" />
+      <LineId Id="188" Count="7" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="196" Count="0" />
+      <LineId Id="198" Count="2" />
+      <LineId Id="197" Count="0" />
+      <LineId Id="16" Count="10" />
       <LineId Id="91" Count="0" />
       <LineId Id="153" Count="3" />
       <LineId Id="87" Count="0" />
       <LineId Id="127" Count="0" />
+      <LineId Id="212" Count="0" />
       <LineId Id="94" Count="0" />
+      <LineId Id="213" Count="0" />
       <LineId Id="160" Count="0" />
+      <LineId Id="214" Count="0" />
       <LineId Id="133" Count="0" />
+      <LineId Id="215" Count="0" />
       <LineId Id="161" Count="0" />
       <LineId Id="128" Count="0" />
+      <LineId Id="216" Count="0" />
       <LineId Id="148" Count="0" />
+      <LineId Id="217" Count="0" />
       <LineId Id="100" Count="0" />
+      <LineId Id="203" Count="0" />
+      <LineId Id="201" Count="0" />
       <LineId Id="151" Count="0" />
       <LineId Id="138" Count="0" />
       <LineId Id="137" Count="0" />
+      <LineId Id="218" Count="0" />
       <LineId Id="95" Count="0" />
       <LineId Id="28" Count="0" />
       <LineId Id="96" Count="0" />
       <LineId Id="132" Count="0" />
+      <LineId Id="209" Count="0" />
       <LineId Id="97" Count="0" />
-      <LineId Id="163" Count="1" />
+      <LineId Id="210" Count="0" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="211" Count="0" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="208" Count="0" />
       <LineId Id="131" Count="0" />
       <LineId Id="139" Count="0" />
+      <LineId Id="205" Count="0" />
       <LineId Id="147" Count="0" />
-      <LineId Id="142" Count="1" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="206" Count="0" />
+      <LineId Id="143" Count="0" />
+      <LineId Id="204" Count="0" />
+      <LineId Id="202" Count="0" />
       <LineId Id="152" Count="0" />
       <LineId Id="144" Count="1" />
+      <LineId Id="207" Count="0" />
       <LineId Id="98" Count="0" />
       <LineId Id="136" Count="0" />
       <LineId Id="74" Count="0" />
@@ -141,10 +203,11 @@ END_IF
       <LineId Id="75" Count="0" />
       <LineId Id="80" Count="0" />
       <LineId Id="85" Count="0" />
-      <LineId Id="81" Count="1" />
-      <LineId Id="149" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="219" Count="0" />
       <LineId Id="125" Count="0" />
       <LineId Id="130" Count="0" />
+      <LineId Id="220" Count="0" />
       <LineId Id="83" Count="0" />
       <LineId Id="73" Count="0" />
       <LineId Id="54" Count="0" />

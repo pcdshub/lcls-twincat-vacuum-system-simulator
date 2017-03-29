@@ -21,7 +21,9 @@ A. Pai
 
 Takes in Pirani Gauge as an INPUT and Cold Cathode gauge as an IN_OUT. 
 The Cold Cathode uses the Pirani Pressure to determine whether or not
-to turn on or turn off. There is no turn on/ turn off timer. 
+to turn on or turn off. 
+
+There is no turn on/ turn off timer. 
 No Hysterisis either. 
 
 Turn on timer is left to Cold Cathode Function Block.
@@ -39,6 +41,7 @@ END_IF]]></ST>
       <LineId Id="22" Count="1" />
       <LineId Id="17" Count="0" />
       <LineId Id="25" Count="1" />
+      <LineId Id="49" Count="1" />
       <LineId Id="28" Count="2" />
       <LineId Id="21" Count="0" />
       <LineId Id="31" Count="2" />
