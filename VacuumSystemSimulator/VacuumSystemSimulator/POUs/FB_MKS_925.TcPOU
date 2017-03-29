@@ -20,17 +20,22 @@ MKS 925 Vacuum gauge
 A vacuum gauge takes as input, the pressure of the volume it is attached to,
 and produces on its analog output, a corresponding voltage.
 
-
+A.Pai
+3/29/2017
 *)
 
-IF stGauge.q_xGaugeConnected THEN
+IF stGauge.q_xGaugeConnected THEN//If gauge is connected
+
 	(*set gauge real pressure based on chamber real pressure*)
 	stGauge.rPress := stVolume.rPressure;
 	(*set gauge raw pressure based on transformation of real pressure*)
 	stGauge.q_iRawPress := M_MKS_925(stGauge);// gauge on
-ELSE
+
+ELSE//gauge gets disconnected
+
 	stGauge.rPress := 0;
 	stGauge.q_iRawPress := 0; // gauge not on ??
+
 END_IF]]></ST>
     </Implementation>
     <Method Name="M_MKS_925" Id="{c735eda5-b21f-47c1-a9cd-c73186e26980}">
@@ -66,12 +71,19 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_MKS_925">
-      <LineId Id="15" Count="7" />
+      <LineId Id="15" Count="5" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="21" Count="1" />
       <LineId Id="35" Count="0" />
-      <LineId Id="32" Count="2" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="33" Count="1" />
       <LineId Id="28" Count="1" />
+      <LineId Id="50" Count="0" />
       <LineId Id="36" Count="0" />
+      <LineId Id="49" Count="0" />
       <LineId Id="30" Count="1" />
+      <LineId Id="48" Count="0" />
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_MKS_925.M_MKS_925">

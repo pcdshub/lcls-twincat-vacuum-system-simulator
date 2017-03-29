@@ -18,7 +18,8 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[(* Aperture Simulation
-A. Wallace 2016-5-5
+A.Pai
+3/29/2017
 
 An aperture is like a valve that is permanently open but allows a restricted
 amount of mass to flow through it. It has no polarity, that is to say,
@@ -49,7 +50,9 @@ stBVol.rPressure := Pb + (Pa-Pb)*i_rC*tSec/Vb;
 ]]></ST>
     </Implementation>
     <LineIds Name="FB_Aperture">
-      <LineId Id="3" Count="4" />
+      <LineId Id="3" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="4" Count="3" />
       <LineId Id="44" Count="2" />
       <LineId Id="8" Count="9" />
       <LineId Id="41" Count="0" />

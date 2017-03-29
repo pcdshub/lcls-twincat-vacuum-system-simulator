@@ -3,6 +3,7 @@
   <DUT Name="ST_GAM_PIP" Id="{fa45bb55-ea5c-4be6-9451-79b23721a0cd}">
     <Declaration><![CDATA[TYPE ST_GAM_PIP :
 STRUCT
+	//Discrete Readback 
 	xOn : BOOL; //Readback of whether Gamma Ion Pump is turned on or not
 END_STRUCT
 END_TYPE

@@ -3,6 +3,11 @@
   <DUT Name="ST_CapManometer_CMR362" Id="{e78f896f-852d-4bf0-a119-0ffe2d298eb2}">
     <Declaration><![CDATA[TYPE ST_CapManometer_CMR362 EXTENDS ST_VacuumGauge :
 STRUCT
+	(*ST_CapManometer_CMR362 is a special CapManometer with a 
+	rFull_Scale = 75.0 Torr*)
+	
+	//rFull_Scale used for scaling the voltage range of Capacitance
+	//Manometer 
 	rFull_Scale : REAL := 75.0 ;// Torr
 END_STRUCT
 END_TYPE

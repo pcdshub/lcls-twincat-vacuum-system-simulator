@@ -24,8 +24,8 @@ rate.
 A. Wallace, 2016-2-28
 *)
 
-IF stPump.i_xRun THEN
-	// 
+IF stPump.i_xRun THEN//Press the Pump Run button
+	// drop the pressure by a small percentage of the total pressure
 	stVolInlet.rPressure := MAX( stVolInlet.rPressure*(1-stPump.rMRE/stVolInlet.rVolume), stPump.rBasePress);
 END_IF]]></ST>
     </Implementation>

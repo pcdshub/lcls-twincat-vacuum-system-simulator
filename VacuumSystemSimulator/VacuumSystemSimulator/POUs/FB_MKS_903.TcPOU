@@ -22,7 +22,8 @@ MKS 909 Vacuum gauge
 A vacuum gauge takes as input, the pressure of the volume it is attached to,
 and produces on its analog output, a corresponding voltage.
 
-
+A.Pai
+3/29/2017
 *)
 
 (* Operation 
@@ -32,15 +33,23 @@ start an ion current.
 stGauge.tonIC.IN	:=	stGauge.i_xHvOn;	
 stGauge.tonIC();
 
-IF stGauge.tonIC.Q AND stGauge.q_xGaugeConnected THEN
+IF stGauge.tonIC.Q AND stGauge.q_xGaugeConnected THEN//If gauge is connected and fully on
+
+	(*set gauge real pressure based on chamber real pressure*)
 	stGauge.rPress := stVolume.rPressure;
+	(*set gauge raw pressure based on transformation of real pressure*)
 	stGauge.q_iRawPress := M_MKS_903(stGauge);// gauge on
-ELSIF stGauge.i_xHvOn AND stGauge.q_xGaugeConnected THEN
+
+ELSIF stGauge.i_xHvOn AND stGauge.q_xGaugeConnected THEN//If gauge is connected and starting up
+
 	stGauge.rPress := 0;
 	stGauge.q_iRawPress := M_MKS_903(dummy_WaitingForSpark); // gauge on, waiting for spark??
-ELSE
+
+ELSE//gauge gets disconnected
+
 	stGauge.rPress := 0;
 	stGauge.q_iRawPress := M_MKS_903(dummy_Off); // gauge not on??
+
 END_IF]]></ST>
     </Implementation>
     <Method Name="M_MKS_903" Id="{6da8ed67-5774-41ff-987a-e6754f6ebe1c}">
@@ -65,18 +74,28 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_MKS_903">
-      <LineId Id="14" Count="11" />
+      <LineId Id="14" Count="5" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="20" Count="5" />
       <LineId Id="34" Count="0" />
       <LineId Id="36" Count="0" />
       <LineId Id="35" Count="0" />
       <LineId Id="26" Count="0" />
       <LineId Id="42" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="58" Count="0" />
       <LineId Id="28" Count="0" />
+      <LineId Id="65" Count="0" />
       <LineId Id="31" Count="0" />
+      <LineId Id="59" Count="0" />
       <LineId Id="43" Count="0" />
+      <LineId Id="60" Count="0" />
       <LineId Id="37" Count="1" />
+      <LineId Id="61" Count="0" />
       <LineId Id="44" Count="0" />
+      <LineId Id="62" Count="0" />
       <LineId Id="39" Count="1" />
+      <LineId Id="64" Count="0" />
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_MKS_903.M_MKS_903">

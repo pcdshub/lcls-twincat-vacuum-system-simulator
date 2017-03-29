@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4018.5">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
   <DUT Name="ST_MKS_422" Id="{e02c8287-6648-4f78-b4be-5219b3c43dad}">
     <Declaration><![CDATA[TYPE ST_MKS_422 EXTENDS ST_VacuumGauge :
 STRUCT
 	
-	//Ion gauges only
-	i_xHvOn	:	BOOL;
+	//Discrete Control: Ion gauges only
+	i_xHvOn	:	BOOL;//High voltage On to turn on ion gauges
 	
 	// Simulation parameters
-	tonIC	:	TON := (PT := T#10S);
+	tonIC	:	TON := (PT := T#10S);// takes 10 seconds to turn on this gauge
 END_STRUCT
 END_TYPE
 ]]></Declaration>

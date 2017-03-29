@@ -3,7 +3,9 @@
   <DUT Name="ST_CapManometer" Id="{122c4cbe-0afb-4580-8270-bb321f910368}">
     <Declaration><![CDATA[TYPE ST_CapManometer EXTENDS ST_VacuumGauge :
 STRUCT
-	rFull_Scale : REAL;
+	//rFull_Scale used for scaling the voltage range of Capacitance
+	//Manometer
+	rFull_Scale : REAL; //in Torr
 END_STRUCT
 END_TYPE
 ]]></Declaration>

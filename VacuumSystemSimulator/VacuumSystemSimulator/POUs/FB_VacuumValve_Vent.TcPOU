@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4019.2">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
   <POU Name="FB_VacuumValve_Vent" Id="{4d6e6c20-2eb5-4216-b9b3-30aec822cb71}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_VacuumValve_Vent
 VAR_INPUT
@@ -27,6 +27,8 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[(* 
 Vacuum Vent Valve Simulation
+
+Basically it is the opposite of the the FB_VacuumValve but the default is open instead of closed
 
 A valve has two ports, A and B.
 And 3 states:Stable(either open or closed), 1st solenoid trigger, 
@@ -103,5 +105,11 @@ END_IF
 
 ]]></ST>
     </Implementation>
+    <LineIds Name="FB_VacuumValve_Vent">
+      <LineId Id="3" Count="0" />
+      <LineId Id="101" Count="1" />
+      <LineId Id="4" Count="74" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

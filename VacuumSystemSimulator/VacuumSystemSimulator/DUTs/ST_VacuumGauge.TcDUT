@@ -4,13 +4,13 @@
     <Declaration><![CDATA[TYPE ST_VacuumGauge :
 STRUCT
 	(* Simulation parameters *)
-	rPress	:	REAL;
+	rPress	:	REAL;//The real pressure coming from the ST_volume @ a chamber
 	
-	(* IO *)
-	q_iRawPress	:	INT;
+	(* IO Readback *)
+	q_iRawPress	:	INT;// The transformed integer from real pressure to an integer encoded signal to be passed to the PLC 
 	
 	(* Testing Connection *)
-	q_xGaugeConnected	: BOOL;
+	q_xGaugeConnected	: BOOL;// to connect and disconnect gauge, easy to check whether guage in connected at correct location
 
 END_STRUCT
 END_TYPE

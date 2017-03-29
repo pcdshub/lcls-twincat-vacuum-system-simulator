@@ -18,14 +18,14 @@ STRUCT
 	
 	
 	//Discrete controls
-	i_xIlk	:	BOOL;
-	i_xRun	:	BOOL;
+	i_xIlk	:	BOOL;//allow pump to turn on
+	i_xRun	:	BOOL;//actually turn on pump
 	
 	//Discrete readbacks
-	q_xAtSpd	:	BOOL;
-	q_xErr	:	BOOL;
-	q_xStart	:	BOOL;
-	q_xLowSpd	: BOOL;
+	q_xAtSpd	:	BOOL;//whether pump is at top speed
+	q_xErr	:	BOOL;//whether pump has an error or faulted
+	q_xStart	:	BOOL;//whether pump has started but hasnt reached top speed, returns false when reaches top speeds
+	q_xLowSpd	: BOOL;//whether pump is in a lowspeed STATE
 	
 	//Other Readbacks
 	q_iPower	:	INT;

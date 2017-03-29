@@ -23,14 +23,18 @@ and produces on its analog output, a corresponding voltage.
 A. Pai, 2017-3-27
 *)
 
-IF stGCM.q_xGaugeConnected THEN
+IF stGCM.q_xGaugeConnected THEN//If gauge is connected
+
 	(*set gauge real pressure based on chamber real pressure*)
 	stGCM.rPress := stVolume.rPressure;
 	(*set gauge raw pressure based on transformation of real pressure*)
 	stGCM.q_iRawPress := M_CapManometer(stGCM);// gauge on
-ELSE
+
+ELSE//gauge gets disconnected
+
 	stGCM.rPress := 0;
 	stGCM.q_iRawPress := 0; // gauge not on ??
+
 END_IF]]></ST>
     </Implementation>
     <Method Name="M_CapManometer" Id="{1f1cafc7-de8e-423e-8db4-e960ae5afb99}">
@@ -55,7 +59,14 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_CapManometer">
-      <LineId Id="21" Count="16" />
+      <LineId Id="21" Count="9" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="31" Count="3" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="36" Count="1" />
+      <LineId Id="53" Count="0" />
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_CapManometer.M_CapManometer">

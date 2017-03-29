@@ -22,14 +22,18 @@ and produces on its analog output, a corresponding voltage.
 A. Pai, 2017-3-27
 *)
 
-IF stGCM_362.q_xGaugeConnected THEN
+IF stGCM_362.q_xGaugeConnected THEN//If gauge is connected
+
 	(*set gauge real pressure based on chamber real pressure*)
 	stGCM_362.rPress := stVolume.rPressure;
 	(*set gauge raw pressure based on transformation of real pressure*)
 	stGCM_362.q_iRawPress := M_CapManometer_CMR362(stGCM_362);// gauge on
-ELSE
+
+ELSE//gauge gets disconnected
+
 	stGCM_362.rPress := 0;
 	stGCM_362.q_iRawPress := 0; // gauge not on ??
+
 END_IF]]></ST>
     </Implementation>
     <Method Name="M_CapManometer_CMR362" Id="{bb067591-12fc-4783-a1c5-30e2e231d5aa}">
@@ -54,7 +58,14 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_CapManometer_CMR362">
-      <LineId Id="10" Count="16" />
+      <LineId Id="10" Count="9" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="20" Count="3" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="41" Count="0" />
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_CapManometer_CMR362.M_CapManometer_CMR362">

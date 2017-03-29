@@ -3,7 +3,7 @@
   <DUT Name="ST_MKS_907" Id="{401383f3-23fb-4e24-ba3c-5fc3a64dd289}">
     <Declaration><![CDATA[TYPE ST_MKS_907 EXTENDS ST_VacuumGauge :
 STRUCT
-	stIntrpParams	:	ST_CTRL_LIN_INTERPOLATION_PARAMS;
+	stIntrpParams	:	ST_CTRL_LIN_INTERPOLATION_PARAMS;//setup for interpolating the Pirani's funky voltage to pressure transformation
 	fbInterpolator	:	FB_CTRL_LIN_INTERPOLATION := (
 		bExtrapolate := FALSE
 );

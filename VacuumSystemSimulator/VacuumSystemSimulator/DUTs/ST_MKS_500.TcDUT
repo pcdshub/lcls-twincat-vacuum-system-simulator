@@ -3,11 +3,11 @@
   <DUT Name="ST_MKS_500" Id="{25e9481f-38d0-48ad-928e-1ab5d667df90}">
     <Declaration><![CDATA[TYPE ST_MKS_500 EXTENDS ST_VacuumGauge :
 STRUCT
-	//Ion gauges only
-	i_xHvOn	:	BOOL;
+	//Discrete Control: Ion gauges only
+	i_xHvOn	:	BOOL; //High voltage On to turn on this Cold Cathode gauge
 	
 	// Simulation parameters
-	tonIC	:	TON := (PT := T#10S);
+	tonIC	:	TON := (PT := T#10S);// takes 10 seconds to turn on this Cold Cathode gauge
 END_STRUCT
 END_TYPE
 ]]></Declaration>
