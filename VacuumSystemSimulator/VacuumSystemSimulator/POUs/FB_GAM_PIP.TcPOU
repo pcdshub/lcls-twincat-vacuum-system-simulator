@@ -24,21 +24,14 @@ The Ion Pump turns gas molecules into solid by using electroplating.
 Therefore the Ion Pump takes gas molecules out of the system. 
 We can treat that as if a small portion of gas mass is disappearing.
 
-Equation:
-Assume
-Mass = Pressure*volume (Torr * Liters)
-
-Mass_final/Volume = (Mass_initial/Volume) -  (Pressure*volume/seconds) * seconds/ Volume (should we change to ionConductance?)
-
-Pressure_final = Pressure _ inital - IonMassFlowRate * seconds/Volume of chamber
 *)
 
 IF stPip.xOn THEN
 
 Pa := stVolume.rPressure;
 Va := stVolume.rVolume;
-
-stVolume.rPressure := Pa - IonMassRate*tSec/Va;
+// just reduce the pressure by 0.001%
+stVolume.rPressure := Pa *(0.999);
 
 END_IF]]></ST>
     </Implementation>
@@ -46,11 +39,6 @@ END_IF]]></ST>
       <LineId Id="21" Count="1" />
       <LineId Id="26" Count="3" />
       <LineId Id="31" Count="0" />
-      <LineId Id="33" Count="0" />
-      <LineId Id="32" Count="0" />
-      <LineId Id="34" Count="2" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="37" Count="0" />
       <LineId Id="25" Count="0" />
       <LineId Id="20" Count="0" />
       <LineId Id="38" Count="0" />
