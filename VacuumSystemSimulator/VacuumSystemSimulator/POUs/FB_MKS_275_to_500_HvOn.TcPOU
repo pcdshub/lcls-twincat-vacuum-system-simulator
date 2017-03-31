@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
-  <POU Name="MKS_275_to_500_HvOn" Id="{c90aa29b-b222-4340-83a6-1c3483b75837}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK MKS_275_to_500_HvOn
+  <POU Name="FB_MKS_275_to_500_HvOn" Id="{c90aa29b-b222-4340-83a6-1c3483b75837}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_MKS_275_to_500_HvOn
 VAR_INPUT
 	stPirani	:	ST_MKS_275;
 END_VAR
@@ -35,7 +35,7 @@ ELSE
 	stCC.i_xHvOn := FALSE;//Turn off Cathode
 END_IF]]></ST>
     </Implementation>
-    <LineIds Name="MKS_275_to_500_HvOn">
+    <LineIds Name="FB_MKS_275_to_500_HvOn">
       <LineId Id="16" Count="0" />
       <LineId Id="24" Count="0" />
       <LineId Id="22" Count="1" />
