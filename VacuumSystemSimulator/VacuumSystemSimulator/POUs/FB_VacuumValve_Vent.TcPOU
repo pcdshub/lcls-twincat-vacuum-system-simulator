@@ -23,6 +23,9 @@ VAR
 	State : INT;
 	//calculates prevous times to send correct PT
 	CalcOpenTime : TIME := T#0MS;
+	
+	fbFirstInit : R_TRIG;
+	xFirstPass	:	BOOL;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[(* 
@@ -44,6 +47,15 @@ When Solenoid goes high vent is closed:
 
 2017-2-17 A. Pai
 *)
+
+(*On first pass, put valve into closed valve state*)
+fbFirstInit(CLK := TRUE,
+			Q => xFirstPass);
+IF xFirstPass THEN
+	stValve.q_xClsLS := FALSE;
+	stValve.q_xOpnLS := TRUE;
+	State := 0;
+END_IF
 
 (* Pressure transfer *)
 IF NOT stValve.q_xClsLS THEN
@@ -108,7 +120,9 @@ END_IF
     <LineIds Name="FB_VacuumValve_Vent">
       <LineId Id="3" Count="0" />
       <LineId Id="101" Count="1" />
-      <LineId Id="4" Count="74" />
+      <LineId Id="4" Count="14" />
+      <LineId Id="125" Count="8" />
+      <LineId Id="19" Count="59" />
       <LineId Id="2" Count="0" />
     </LineIds>
   </POU>

@@ -23,9 +23,9 @@ VAR
 	State : INT;
 	//calculates prevous times to send correct PT
 	CalcOpenTime : TIME := T#0MS;
-	
-	fbFirstInit : R_TRIG;
+		fbFirstInit : R_TRIG;
 	xFirstPass	:	BOOL;
+
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -68,7 +68,7 @@ fbFirstInit(CLK := TRUE,
 			Q => xFirstPass);
 IF xFirstPass THEN
 	stValve.q_xClsLS := TRUE;
-	stValve.q_xClsLS := FALSE;
+	stValve.q_xOpnLS := FALSE;
 	State := 0;
 END_IF
 
