@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="FB_SetChamberPressure" Id="{9a121830-c1f4-44cb-9d10-7af373b6751a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SetChamberPressure
+VAR_IN_OUT
+	chamber	: ST_Volume;
+END_VAR
+VAR_INPUT
+	rNewPressure	: REAL;
+	Override	: BOOL;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//If override boolean is on then set camber pressure to new pressure
+IF Override THEN
+	chamber.rPressure := rNewPressure;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_SetChamberPressure">
+      <LineId Id="19" Count="0" />
+      <LineId Id="16" Count="1" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
