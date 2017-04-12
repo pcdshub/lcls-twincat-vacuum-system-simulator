@@ -114,8 +114,11 @@ xPump := stPump.i_xRun AND NOT stPump.q_xErr;
 IF xPump THEN
 	rInletPressDelta := stVlInlet.rPressure; //the current pressure so we can find the delta further down
 	// mre should become a function of inlet and outlet pressure.
-	stVlInlet.rPressure := MAX( stPump.rBasePress, 
-							stVlInlet.rPressure * (1 - stPump.rMRE/stVlInlet.rVolume) );
+	//If the chamber pressure is lower than the pump base pressure, no pumping can occur because the mass removal efficiency effectively drops to zero.
+	IF stVlInlet.rPressure > stPump.rBasePress THEN
+		stVlInlet.rPressure := MAX( stPump.rBasePress, 
+								stVlInlet.rPressure * (1 - stPump.rMRE/stVlInlet.rVolume) );
+	END_IF
 	rInletPressDelta := rInletPressDelta - stVlInlet.rPressure;
 	// The total mass that was transfered through the pump
 	rMassTrans	:= rInletPressDelta*stVlInlet.rVolume;
@@ -133,7 +136,12 @@ END_IF]]></ST>
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_TurboPump.PumpLogic">
-      <LineId Id="3" Count="90" />
+      <LineId Id="3" Count="77" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="81" Count="1" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="83" Count="10" />
       <LineId Id="2" Count="0" />
     </LineIds>
   </POU>
