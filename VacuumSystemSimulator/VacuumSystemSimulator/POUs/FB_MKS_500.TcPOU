@@ -81,7 +81,7 @@ Does the inverse of the FB 500 from the vacuum library.
 A. Wallace, 2016-2-22
 *)
 IF i_xHVOn and i_xICOn THEN
-	rVoltage := (vBase + vSlope * LOG(i_rPress/pBase));
+	rVoltage := MAX(vBase, (vBase + vSlope * LOG(i_rPress/pBase)));
 ELSIF i_xHVOn AND NOT i_xICOn THEN
 	rVoltage := vNoIC;
 ELSE
