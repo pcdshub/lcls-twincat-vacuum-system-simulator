@@ -5,7 +5,7 @@
 STRUCT
 	//Simulation Parameters
 	rMRE	:	REAL; // Mass Removal Efficiency: should be a number less than 1.
-	rBasePress	:	REAL;
+	rBasePress	:	REAL := 1E-3;
 	rLoad	:	REAL;
 	iMaxSpd	:	INT;
 	rMaxLoad	:	REAL;
