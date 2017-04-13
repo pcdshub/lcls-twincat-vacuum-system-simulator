@@ -33,24 +33,20 @@ start an ion current.
 stGauge.tonIC.IN	:=	stGauge.i_xHvOn;	
 stGauge.tonIC();
 
-IF stGauge.tonIC.Q AND stGauge.q_xGaugeConnected THEN//If gauge is connected and fully on
+stGauge.rPress := stVolume.rPressure; //always this because we assume the gauge is actually physically connected
 
-	stGauge.rPress := stVolume.rPressure;
+IF stGauge.q_xGaugeConnected THEN//If gauge is connected
+	
 	stGauge.q_iRawPress := M_MKS_500(
-	i_rPress := stVolume.rPressure,
+	i_rPress := stGauge.rPress,
 	i_xHVOn	:=	stGauge.i_xHvOn,
 	i_xICOn	:=	stGauge.tonIC.Q
 	);// gauge on
 
-ELSIF stGauge.i_xHvOn AND stGauge.q_xGaugeConnected THEN//If gauge is connected and starting up
-
-	stGauge.rPress := 0;
-	stGauge.q_iRawPress := 0; // gauge on, waiting for spark??
-
 ELSE//gauge gets disconnected
 
 	stGauge.rPress := 0;
-	stGauge.q_iRawPress := 0; // gauge not on??
+	stGauge.q_iRawPress := 0; // gauge disconnected
 
 END_IF]]></ST>
     </Implementation>
@@ -66,7 +62,7 @@ VAR
 END_VAR
 VAR CONSTANT
 	vBase	:	REAL := 1; //corresponding vbase 1V actually?
-	pBase	:	REAL := 1.0E-9; //i think the pbase might be 1E-9 for the default curve...
+	pBase	:	REAL := 1.0E-9; //i think the pbase might be 1E-10 for the default curve...
 	vSlope	:	REAL := 1.0; //looks correct for default curve
 	vNoIC	:	REAL := 0.6;
 	vNoHV	:	REAL := 0.1;
@@ -95,15 +91,12 @@ M_MKS_500 := REAL_TO_INT( rVoltage * 32767/10 );]]></ST>
       <LineId Id="3" Count="4" />
       <LineId Id="73" Count="1" />
       <LineId Id="9" Count="7" />
-      <LineId Id="38" Count="2" />
-      <LineId Id="67" Count="0" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="50" Count="3" />
-      <LineId Id="42" Count="0" />
-      <LineId Id="68" Count="0" />
-      <LineId Id="43" Count="0" />
+      <LineId Id="94" Count="1" />
+      <LineId Id="38" Count="1" />
       <LineId Id="70" Count="0" />
-      <LineId Id="44" Count="1" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="90" Count="3" />
+      <LineId Id="45" Count="0" />
       <LineId Id="69" Count="0" />
       <LineId Id="46" Count="0" />
       <LineId Id="71" Count="0" />
