@@ -103,8 +103,8 @@ Set error flag, reset when run goes high... for now...
 *)
 stPump.srError.SET1 := xOverloaded OR stPump.tonTemp.Q;
 stPump.rtResetErr.CLK := stPump.i_xRun;
+stPump.rtResetErr();
 stPump.srError.RESET := stPump.rtResetErr.Q;
-stPump.rtResetErr();/// move up a line
 stPump.srError();
 stPump.q_xErr := stPump.srError.Q1;
 local :=stPump.i_xRun AND NOT stPump.q_xErr;
@@ -136,7 +136,10 @@ END_IF]]></ST>
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_TurboPump.PumpLogic">
-      <LineId Id="3" Count="77" />
+      <LineId Id="3" Count="67" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="73" Count="7" />
       <LineId Id="102" Count="0" />
       <LineId Id="100" Count="0" />
       <LineId Id="81" Count="1" />
