@@ -11,41 +11,11 @@ VAR_IN_OUT
 	stGauge	:	ST_MKS_275;
 END_VAR
 VAR
-END_VAR
-]]></Declaration>
-    <Implementation>
-      <ST><![CDATA[(* 
-MKS 275 Vacuum gauge
-
-A vacuum gauge takes as input, the pressure of the volume it is attached to,
-and produces on its analog output, a corresponding voltage.
-
-A.Pai
-3/29/2017
-*)
-
-IF stGauge.q_xGaugeConnected THEN//If gauge is connected
-
-	(*set gauge real pressure based on chamber real pressure*)
-	stGauge.rPress := stVolume.rPressure;
-	(*set gauge raw pressure based on transformation of real pressure*)
-	stGauge.q_iRawPress := M_MKS_275(stGauge);// gauge on
-
-ELSE//gauge gets disconnected
-
-	stGauge.rPress := 0;
-	stGauge.q_iRawPress := 0; // gauge not on ??
-
-END_IF]]></ST>
-    </Implementation>
-    <Method Name="M_MKS_275" Id="{755832a3-0909-4e78-8520-5115dc560198}">
-      <Declaration><![CDATA[METHOD PRIVATE M_MKS_275 : INT
-VAR_INPUT
-	stGauge	:	ST_MKS_275;
+	rVoltage	:	REAL;
 END_VAR
 VAR CONSTANT
 	caPvsV	:	ARRAY[1..30,1..2] OF LREAL := [
-		0.0,0.375,
+		0,0.375,
 		1.00E-04,0.376,
 		2.00E-04,0.377,
 		5.00E-04,0.379,
@@ -77,12 +47,19 @@ VAR CONSTANT
 		1.00E+03,5.659
 	]; //the conversion table for pressure to analog (super) non-linear voltage
 	caPvsVRows	:	UINT	:= 30;
-END_VAR
-VAR
-	rVoltage	:	LREAL;
 END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[(*
+    <Implementation>
+      <ST><![CDATA[(* 
+MKS 275 Vacuum gauge
+
+A vacuum gauge takes as input, the pressure of the volume it is attached to,
+and produces on its analog output, a corresponding voltage.
+
+A.Pai
+3/29/2017
+*)
+
+(*
 MKS 275 voltage calculation 
 
 Does the inverse of the FB 275 from the vacuum library.
@@ -90,35 +67,46 @@ Converts real pressure into MKS 275 signal based on interpolation.
 //not working right now
 A. Pai, 2017-1-13
 *)
-IF stGauge.rPress <> 0 THEN
 
+
+IF stGauge.q_xGaugeConnected THEN//If gauge is connected
+
+	(*set gauge real pressure based on chamber real pressure*)
+	stGauge.rPress := stVolume.rPressure;
 	(* Run the interpolator to get a new value for the analog voltage *)
 	stGauge.stIntrpParams.tCtrlCycleTime := T#10MS;
 	stGauge.stIntrpParams.tTaskCycleTime := T#10MS;
 	stGauge.stIntrpParams.pDataTable_ADR	:=	ADR(caPvsV); //we point each time this block gets called to avoid online changes shifting memory around and potentially screwing up this pointer.
 	stGauge.stIntrpParams.nDataTable_SIZEOF	:=	SIZEOF(caPvsV);
-	stGauge.stIntrpParams.nDataTable_NumberOfRows := 30;	
+	stGauge.stIntrpParams.nDataTable_NumberOfRows := caPvsVRows;	
 	
 	stGauge.fbInterpolator.fIn	:=	REAL_TO_LREAL(stGauge.rPress);
 	stGauge.fbInterpolator.eMode := eCTRL_MODE_ACTIVE; //active
-///	stGauge.fbInterpolator.fManValue := 666;
+
 	stGauge.fbInterpolator(stParams := stGauge.stIntrpParams, fOut => rVoltage);
-	(*Set signal based on voltage*)
-	M_MKS_275	:= LREAL_TO_INT( rVoltage * 32767/10 );
-	
-ELSE
-	M_MKS_275 := 0;
+	(*set gauge raw pressure based on transformation of real pressure*)
+	stGauge.q_iRawPress := LREAL_TO_INT( rVoltage * 32767/10 );// gauge on
+
+ELSE//gauge gets disconnected
+
+	stGauge.rPress := 0;
+	stGauge.q_iRawPress := 0; // gauge not on ??
+
 END_IF]]></ST>
-      </Implementation>
-    </Method>
+    </Implementation>
     <LineIds Name="FB_MKS_275">
       <LineId Id="15" Count="4" />
       <LineId Id="53" Count="0" />
       <LineId Id="20" Count="2" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="101" Count="7" />
+      <LineId Id="100" Count="0" />
       <LineId Id="28" Count="0" />
       <LineId Id="33" Count="0" />
       <LineId Id="49" Count="0" />
-      <LineId Id="34" Count="1" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="128" Count="10" />
+      <LineId Id="35" Count="0" />
       <LineId Id="29" Count="1" />
       <LineId Id="50" Count="0" />
       <LineId Id="36" Count="0" />
@@ -126,18 +114,6 @@ END_IF]]></ST>
       <LineId Id="31" Count="1" />
       <LineId Id="52" Count="0" />
       <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_MKS_275.M_MKS_275">
-      <LineId Id="6" Count="9" />
-      <LineId Id="72" Count="2" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="75" Count="0" />
-      <LineId Id="68" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="71" Count="0" />
-      <LineId Id="70" Count="0" />
-      <LineId Id="20" Count="6" />
-      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
