@@ -3,7 +3,6 @@
   <POU Name="FB_RoughPump" Id="{1c0a7f67-206d-4f00-a16d-b41dffef9f3c}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_RoughPump
 VAR_INPUT
-	//i_xRun	:	BOOL := FALSE;
 END_VAR
 VAR_OUTPUT
 END_VAR
