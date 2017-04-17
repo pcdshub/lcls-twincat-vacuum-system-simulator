@@ -28,14 +28,16 @@ No Hysterisis either.
 Turn on timer is left to Cold Cathode Function Block.
 *)
 //The Cold Cathode Setpoint is 0.01 Torr
-IF stPirani.rPress <= 1.0E-2 THEN
-	stCC.i_xHvOn := TRUE;//Turn on Cathode
-ELSE
-	stCC.i_xHvOn := FALSE;//Turn off Cathode
-END_IF]]></ST>
+
+//A. Wallace, implementing hysteresis with S and R
+
+stCC.i_xHvOn S= stPirani.rPress < 5E-3;
+stCC.i_xHvOn R= stPirani.rPress >= 1.0E-2;]]></ST>
     </Implementation>
     <LineIds Name="FB_MKS_275_to_500_HvOn">
-      <LineId Id="20" Count="16" />
+      <LineId Id="20" Count="11" />
+      <LineId Id="49" Count="3" />
+      <LineId Id="32" Count="0" />
       <LineId Id="9" Count="0" />
     </LineIds>
   </POU>
