@@ -32,6 +32,7 @@ VAR_INPUT
 END_VAR
 VAR
 	local :BOOL;
+	rSpeedFactor: REAL;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -68,8 +69,13 @@ Normalized pump speed +
 Pump load is also increased by having a high foreline pressure. If the inlet pressure is low, then the foreline
 pressure can be quite high, without affecting the pump too badly.
 *)
-stPump.rLoad := LIMIT( 0, (INT_TO_REAL(stPump.q_iSpeed) / INT_TO_REAL(stPump.iMaxSpd)) + 
-					(stVlInlet.rPressure/ATM) - rLoadFactor, 1);
+//stPump.rLoad := LIMIT( 0, (INT_TO_REAL(stPump.q_iSpeed) / INT_TO_REAL(stPump.iMaxSpd)) + 
+//					(stVlInlet.rPressure/ATM) - rLoadFactor, 1);
+IF xPump THEN
+	stPump.rLoad := LIMIT( 0, (stVlInlet.rPressure/ATM + stVlOutlet.rPressure/ATM + ( (INT_TO_REAL(stPump.iMaxSpd)- INT_TO_REAL(stPump.q_iSpeed) ) / INT_TO_REAL(stPump.iMaxSpd)))/3 , 1);
+ELSE
+	stPump.rLoad:= 0;
+END_IF
 stPump.tonOvrLd.IN := stPump.rLoad >= stPump.rMaxLoad;
 stPump.tonOvrLd.PT := OverloadTime;
 stPump.tonOvrLd();
@@ -136,10 +142,14 @@ END_IF]]></ST>
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_TurboPump.PumpLogic">
-      <LineId Id="3" Count="67" />
-      <LineId Id="109" Count="0" />
-      <LineId Id="71" Count="0" />
-      <LineId Id="73" Count="7" />
+      <LineId Id="3" Count="33" />
+      <LineId Id="111" Count="1" />
+      <LineId Id="114" Count="1" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="37" Count="32" />
+      <LineId Id="116" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="72" Count="8" />
       <LineId Id="102" Count="0" />
       <LineId Id="100" Count="0" />
       <LineId Id="81" Count="1" />
