@@ -14,7 +14,7 @@ VAR
 	rVoltage	:	REAL;
 END_VAR
 VAR CONSTANT
-	caPvsV	:	ARRAY[1..30,1..2] OF LREAL := [
+	caPvsV	:	ARRAY[1..31,1..2] OF LREAL := [
 		0,0.375,
 		1.00E-04,0.376,
 		2.00E-04,0.377,
