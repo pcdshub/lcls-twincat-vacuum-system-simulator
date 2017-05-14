@@ -61,10 +61,10 @@ VAR
 	rVoltage	:	REAL;
 END_VAR
 VAR CONSTANT
-	vBase	:	REAL := 1; //corresponding vbase 1V actually?
-	pBase	:	REAL := 1.0E-9; //i think the pbase might be 1E-10 for the default curve...
+	vBase	:	REAL := 0; //corresponding vbase 0V based on default curve.  See manual pg. 44
+	pBase	:	REAL := 1.0E-10; //default curve base pressure is 1E-10. Confusing since can't actually read that low using analog out.
 	vSlope	:	REAL := 1.0; //looks correct for default curve
-	vNoIC	:	REAL := 0.6;
+	vNoIC	:	REAL := 0.5;
 	vNoHV	:	REAL := 0.1;
 END_VAR
 ]]></Declaration>
