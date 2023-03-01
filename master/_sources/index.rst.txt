@@ -7,6 +7,7 @@ lcls-twincat-vacuum-system-simulator
 
     VacuumSystemSimulator_pragmas
     VacuumSystemSimulator_nc
+    VacuumSystemSimulator_ethercat
     VacuumSystemSimulator_boxes
     VacuumSystemSimulator_links
 
